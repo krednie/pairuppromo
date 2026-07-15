@@ -1,0 +1,242 @@
+.swipe-join-stage {
+  height: 720px;
+}
+
+.swipe-join-card-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swipe-profile-form {
+  margin-top: 0 !important;
+}
+
+.swipe-card-identity {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.swipe-name-editor {
+  position: relative;
+  width: min(285px, 30vw);
+  height: 50px;
+}
+
+.swipe-name-erasing {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 146px;
+  height: 34px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.swipe-name-erasing strong {
+  font-family: var(--font-serif);
+  font-size: 27px;
+  font-weight: 480;
+  line-height: 1;
+}
+
+.swipe-edit-cursor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 31px;
+  display: block;
+  background: var(--coral);
+  opacity: 0;
+  box-shadow: 0 0 0 1px rgba(255, 117, 104, 0.12);
+}
+
+.swipe-name-input {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(7px);
+}
+
+.swipe-name-input > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.swipe-name-input input {
+  width: 100%;
+  height: 48px;
+  padding: 0 17px;
+  color: var(--white);
+  background: rgba(247, 247, 251, 0.065);
+  border: 1px solid rgba(247, 247, 251, 0.19);
+  border-radius: var(--surface-radius);
+  outline: none;
+  font-size: 15px;
+  user-select: text;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.swipe-name-input input:focus {
+  background: rgba(247, 247, 251, 0.095);
+  border-color: var(--coral);
+}
+
+.swipe-name-input input[aria-invalid="true"] {
+  border-color: var(--coral);
+}
+
+.swipe-name-input input::placeholder {
+  color: rgba(247, 247, 251, 0.48);
+}
+
+.is-name-ready .swipe-name-erasing {
+  animation: swipe-profile-erase 880ms steps(12, end) 180ms forwards;
+}
+
+.is-name-ready .swipe-edit-cursor {
+  animation: swipe-cursor-erase 1050ms steps(2, end) 130ms forwards;
+}
+
+.is-name-ready .swipe-name-input {
+  animation: swipe-name-reveal 420ms var(--ease-pairup) 1080ms forwards;
+  pointer-events: auto;
+}
+
+.swipe-phone-field {
+  margin-top: 17px;
+}
+
+.swipe-phone-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.swipe-card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding-top: 17px;
+}
+
+.swipe-card-action {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border: 1px solid rgba(7, 9, 18, 0.18);
+  border-radius: 50%;
+  box-shadow: 0 14px 28px rgba(7, 9, 18, 0.16);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.swipe-card-action:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 19px 34px rgba(7, 9, 18, 0.2);
+}
+
+.swipe-card-action:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+.swipe-card-action svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.1;
+}
+
+.swipe-card-reject {
+  color: var(--white);
+  background: #080910;
+}
+
+.swipe-card-accept {
+  color: var(--ink);
+  background: var(--coral);
+}
+
+@keyframes swipe-profile-erase {
+  0% { width: 146px; }
+  100% { width: 0; }
+}
+
+@keyframes swipe-cursor-erase {
+  0% { opacity: 0; }
+  10%, 88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes swipe-name-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  .swipe-join-stage {
+    height: 650px;
+  }
+
+  .swipe-name-editor {
+    width: min(270px, 62vw);
+  }
+
+  .swipe-card-action {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 540px) {
+  .swipe-join-stage {
+    height: 625px;
+  }
+
+  .swipe-name-editor {
+    width: min(235px, 59vw);
+    height: 46px;
+  }
+
+  .swipe-name-input input {
+    height: 44px;
+  }
+
+  .swipe-phone-field {
+    margin-top: 14px;
+  }
+
+  .swipe-card-actions {
+    padding-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-name-erasing {
+    display: none;
+    animation: none !important;
+  }
+
+  .swipe-edit-cursor {
+    display: none;
+  }
+
+  .swipe-name-input,
+  .is-name-ready .swipe-name-input {
+    pointer-events: auto;
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
