@@ -51,7 +51,7 @@
   display: block;
   background: var(--coral);
   opacity: 0;
-  box-shadow: 0 0 0 1px rgba(255, 117, 104, 0.12);
+  box-shadow: 0 0 0 1px rgba(233, 139, 127, 0.12);
 }
 
 .swipe-name-input {

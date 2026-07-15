@@ -5,6 +5,7 @@ import Lenis from "lenis"
 import { EmptySpaceHero } from "./components/chapter-one/EmptySpaceHero"
 import { EveryoneLookingSection } from "./components/chapter-two/EveryoneLookingSection"
 import { CollisionSection } from "./components/CollisionSection"
+import { MomentumSection } from "./components/MomentumSection"
 import { SwipeJoinSection } from "./components/SwipeJoinSection"
 import { TeamFormation } from "./components/TeamFormation"
 
@@ -197,6 +198,7 @@ export default function App() {
 
         <TeamFormation />
         <CollisionSection />
+        <MomentumSection />
         <SwipeJoinSection />
       </main>
 

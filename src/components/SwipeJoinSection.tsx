@@ -263,7 +263,6 @@ export function SwipeJoinSection() {
                             </label>
                           </div>
                         </div>
-                        <span className="swipe-card-live"><i /> LIVE</span>
                       </div>
 
                       <div className="swipe-phone-field">

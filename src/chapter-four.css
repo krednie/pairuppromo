@@ -1,0 +1,447 @@
+.momentum-section {
+  position: relative;
+  min-height: max(820px, 104svh);
+  padding: clamp(84px, 10vh, 118px) 5vw 0;
+  overflow: hidden;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(7, 9, 18, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7, 9, 18, 0.045) 1px, transparent 1px),
+    #f4f0d9;
+  background-size: 74px 74px;
+  isolation: isolate;
+}
+
+.momentum-section::before {
+  position: absolute;
+  z-index: -1;
+  right: -8%;
+  bottom: 0;
+  width: 48%;
+  height: 34%;
+  content: "";
+  background: var(--coral);
+  clip-path: polygon(13% 34%, 100% 0, 100% 100%, 0 100%);
+  opacity: 0.86;
+}
+
+.momentum-heading {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+}
+
+.momentum-heading > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(7, 9, 18, 0.5);
+  font-size: 8px;
+  font-weight: 820;
+}
+
+.momentum-heading > span::before {
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: var(--coral);
+  border-radius: 50%;
+}
+
+.momentum-heading h2 {
+  max-width: 920px;
+  margin: 18px 0 0;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(56px, 7.2vw, 108px);
+  font-weight: 480;
+  line-height: 0.88;
+  text-wrap: balance;
+}
+
+.momentum-metrics {
+  width: min(1240px, 100%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: clamp(42px, 6vh, 70px) auto 0;
+  border-top: 1px solid rgba(7, 9, 18, 0.22);
+  border-bottom: 1px solid rgba(7, 9, 18, 0.22);
+}
+
+.momentum-metric {
+  min-width: 0;
+  min-height: 108px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 28px 20px;
+}
+
+.momentum-metric + .momentum-metric {
+  border-left: 1px solid rgba(7, 9, 18, 0.16);
+}
+
+.momentum-metric strong {
+  min-width: 2.25ch;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 4vw, 58px);
+  font-weight: 520;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.momentum-metric span {
+  max-width: 110px;
+  color: rgba(7, 9, 18, 0.55);
+  font-size: 9px;
+  font-weight: 720;
+  line-height: 1.25;
+}
+
+.momentum-scene {
+  position: relative;
+  width: min(1240px, 100%);
+  min-height: 390px;
+  display: grid;
+  grid-template-columns: minmax(360px, 0.82fr) minmax(520px, 1.18fr);
+  gap: clamp(30px, 6vw, 90px);
+  align-items: center;
+  margin: 18px auto 0;
+}
+
+.momentum-activity {
+  position: relative;
+  height: 310px;
+}
+
+.momentum-activity-item {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: min(100%, 500px);
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  color: #f4f0d9;
+  background: #090a12;
+  border: 1px solid rgba(244, 240, 217, 0.16);
+  border-radius: var(--surface-radius);
+  opacity: 0;
+  transform: translateY(112px) scale(0.96);
+  transition:
+    opacity 650ms cubic-bezier(0.2, 0.75, 0.2, 1),
+    transform 760ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.momentum-activity-item.is-current {
+  z-index: 5;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.momentum-activity-item.is-previous {
+  z-index: 2;
+  opacity: 0.14;
+  transform: translateY(-150px) scale(0.92);
+}
+
+.momentum-activity-item.is-next {
+  z-index: 4;
+  opacity: 0.46;
+  transform: translateY(48px) scale(0.97);
+}
+
+.momentum-activity-item.is-next-two {
+  z-index: 3;
+  opacity: 0.18;
+  transform: translateY(132px) scale(0.93);
+}
+
+.momentum-activity-item.is-away {
+  opacity: 0;
+}
+
+.momentum-activity-avatar {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: var(--coral);
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 820;
+}
+
+.momentum-activity-item:nth-child(2) .momentum-activity-avatar {
+  background: #a8ccd0;
+}
+
+.momentum-activity-item:nth-child(3) .momentum-activity-avatar {
+  background: #d8c77f;
+}
+
+.momentum-activity-item:nth-child(4) .momentum-activity-avatar {
+  color: #f4f0d9;
+  background: #8978cf;
+}
+
+.momentum-activity-item:nth-child(5) .momentum-activity-avatar {
+  background: #f4f0d9;
+}
+
+.momentum-activity-item p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(17px, 1.6vw, 23px);
+  font-weight: 480;
+  line-height: 1.08;
+}
+
+.momentum-signal-map {
+  position: relative;
+  height: 330px;
+}
+
+.momentum-signal-map svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.momentum-signal-map path {
+  fill: none;
+  stroke: rgba(7, 9, 18, 0.38);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.is-active .momentum-signal-map path {
+  animation: momentum-line 3.8s ease-in-out infinite alternate;
+}
+
+.is-active .momentum-signal-map path:nth-child(2) {
+  animation-delay: -1.9s;
+}
+
+.momentum-signal {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(7, 9, 18, 0.68);
+  font-size: 8px;
+  font-weight: 820;
+}
+
+.momentum-signal i {
+  width: 12px;
+  height: 12px;
+  display: block;
+  background: var(--ink);
+  border: 3px solid #f4f0d9;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(7, 9, 18, 0.35);
+}
+
+.is-active .momentum-signal i {
+  animation: momentum-node 2.8s ease-in-out infinite;
+}
+
+.momentum-signal-1 {
+  top: 69%;
+  left: 5%;
+}
+
+.momentum-signal-2 {
+  top: 19%;
+  left: 54%;
+}
+
+.momentum-signal-3 {
+  right: 4%;
+  bottom: 19%;
+}
+
+.momentum-signal-2 i {
+  background: var(--coral);
+  animation-delay: -0.9s;
+}
+
+.momentum-signal-3 i {
+  background: #8978cf;
+  animation-delay: -1.8s;
+}
+
+.momentum-skills {
+  position: relative;
+  width: calc(100% + 10vw);
+  height: 72px;
+  margin: 12px -5vw 0;
+  overflow: hidden;
+  color: #f4f0d9;
+  background: var(--ink);
+  border-top: 1px solid rgba(244, 240, 217, 0.12);
+}
+
+.momentum-skills-track {
+  width: max-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-left: 9px;
+  animation: momentum-skills 24s linear infinite;
+}
+
+.momentum-skills-track span {
+  min-width: 120px;
+  padding: 12px 18px;
+  color: rgba(244, 240, 217, 0.82);
+  border: 1px solid rgba(244, 240, 217, 0.16);
+  border-radius: var(--surface-radius);
+  font-size: 9px;
+  font-weight: 720;
+  text-align: center;
+}
+
+@keyframes momentum-line {
+  from { stroke-dashoffset: 1; opacity: 0.28; }
+  to { stroke-dashoffset: 0; opacity: 0.9; }
+}
+
+@keyframes momentum-node {
+  0%, 100% { transform: scale(0.82); opacity: 0.45; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes momentum-skills {
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 900px) {
+  .momentum-section {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .momentum-metric {
+    display: grid;
+    gap: 5px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .momentum-scene {
+    grid-template-columns: minmax(300px, 0.9fr) minmax(400px, 1.1fr);
+    gap: 22px;
+  }
+
+  .momentum-skills {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .momentum-section {
+    min-height: 0;
+    padding-top: 82px;
+  }
+
+  .momentum-section::before {
+    width: 76%;
+    height: 18%;
+  }
+
+  .momentum-heading {
+    text-align: center;
+  }
+
+  .momentum-heading h2 {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: clamp(50px, 15vw, 70px);
+  }
+
+  .momentum-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 42px;
+  }
+
+  .momentum-metric {
+    min-height: 94px;
+    padding: 20px 14px;
+  }
+
+  .momentum-metric:nth-child(3) {
+    border-left: 0;
+  }
+
+  .momentum-metric:nth-child(n + 3) {
+    border-top: 1px solid rgba(7, 9, 18, 0.16);
+  }
+
+  .momentum-metric strong {
+    font-size: 40px;
+  }
+
+  .momentum-scene {
+    min-height: 660px;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  .momentum-activity {
+    height: 340px;
+  }
+
+  .momentum-activity-item {
+    width: 100%;
+  }
+
+  .momentum-signal-map {
+    height: 270px;
+  }
+
+  .momentum-skills {
+    margin-top: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .momentum-activity {
+    height: auto;
+    display: grid;
+    gap: 9px;
+  }
+
+  .momentum-activity-item {
+    position: relative;
+    top: auto;
+    width: 100%;
+    min-height: 66px;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .momentum-signal-map path,
+  .momentum-signal i,
+  .momentum-skills-track {
+    animation: none;
+  }
+
+  .momentum-signal-map path {
+    stroke-dashoffset: 0;
+  }
+}

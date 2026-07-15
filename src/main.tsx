@@ -8,6 +8,7 @@ import "./chapter-one.css"
 import "./chapter-two.css"
 import "./complementary-revision.css"
 import "./chapter-three.css"
+import "./chapter-four.css"
 import "./swipe-revision.css"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -1,40 +1,83 @@
-import { useEffect, useRef, useState } from "react"
-import { Code2, Lightbulb, Mic2, Palette } from "lucide-react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Code2, Cpu, Lightbulb, Mic2, Palette, Search, UserRound, Video } from "lucide-react"
 import { BrandMark } from "./BrandMark"
 
 type CollisionPhase = "idle" | "searching" | "matched" | "building"
+type Decision = "accepted" | "rejected"
 
 const profiles = [
   {
-    className: "collision-card-developer",
+    className: "collision-reject-one",
+    role: "Research",
+    detail: "Research · Data",
+    goal: "Sustainability",
+    status: "Looking for a team",
+    university: "MUJ",
+    decision: "rejected" as Decision,
+    icon: Search,
+  },
+  {
+    className: "collision-slot-one",
+    name: "Agrima",
     role: "Developer",
     detail: "React · AI/ML",
     goal: "AI tools · Hackathons",
     status: "Ready to build",
+    university: "MUJ",
+    decision: "accepted" as Decision,
     icon: Code2,
   },
   {
-    className: "collision-card-designer",
+    className: "collision-reject-two",
+    role: "Video",
+    detail: "Video · Content",
+    goal: "Consumer apps",
+    status: "Looking for a team",
+    university: "MUJ",
+    decision: "rejected" as Decision,
+    icon: Video,
+  },
+  {
+    className: "collision-slot-two",
+    name: "Ria",
     role: "Designer",
     detail: "UI/UX · Research",
     goal: "Consumer apps",
     status: "Looking for a team",
+    university: "MUJ",
+    decision: "accepted" as Decision,
     icon: Palette,
   },
   {
-    className: "collision-card-product",
+    className: "collision-reject-three",
+    role: "Hardware",
+    detail: "Hardware · AI/ML",
+    goal: "Hackathons",
+    status: "Looking for a team",
+    university: "MUJ",
+    decision: "rejected" as Decision,
+    icon: Cpu,
+  },
+  {
+    className: "collision-slot-three",
+    name: "Shreshth",
     role: "Product thinker",
     detail: "Product · Data",
-    goal: "Hackathon goals",
+    goal: "Sustainability",
     status: "Ready to build",
+    university: "MUJ",
+    decision: "accepted" as Decision,
     icon: Lightbulb,
   },
   {
-    className: "collision-card-presenter",
+    className: "collision-slot-four",
+    name: "Yash",
     role: "Presenter",
     detail: "Pitching · Content",
     goal: "Story · Hackathons",
     status: "Looking for a team",
+    university: "MUJ",
+    decision: "accepted" as Decision,
     icon: Mic2,
   },
 ]
@@ -60,11 +103,11 @@ export function CollisionSection() {
         if (!entry.isIntersecting) return
 
         setPhase("searching")
-        timers.push(window.setTimeout(() => setPhase("matched"), 1100))
-        timers.push(window.setTimeout(() => setPhase("building"), 2200))
+        timers.push(window.setTimeout(() => setPhase("matched"), 5900))
+        timers.push(window.setTimeout(() => setPhase("building"), 6800))
         observer.disconnect()
       },
-      { threshold: 0.28 },
+      { threshold: 0.24 },
     )
 
     observer.observe(section)
@@ -82,7 +125,8 @@ export function CollisionSection() {
       aria-labelledby="collision-title"
     >
       <div className="collision-copy">
-        <h2 id="collision-title">Your next great team may already be here.</h2>
+        <h2 id="collision-title">Your next great team is already here.</h2>
+        <p>Swipe to find your people!</p>
         <div className="collision-status" aria-live="polite" aria-label={"Team status: " + phase}>
           {phases.map((item) => (
             <span className={phase === item ? "is-current" : ""} key={item}>
@@ -92,14 +136,14 @@ export function CollisionSection() {
         </div>
       </div>
 
-      <div className="collision-stage" aria-label="Four prototype profiles forming a complementary team">
-        <svg className="collision-network" viewBox="0 0 900 620" aria-hidden="true">
-          <ellipse cx="450" cy="310" rx="314" ry="226" />
-          <path pathLength="1" d="M246 160C316 210 379 260 450 310" />
-          <path pathLength="1" d="M654 165C588 214 526 262 450 310" />
-          <path pathLength="1" d="M238 458C314 414 382 365 450 310" />
-          <path pathLength="1" d="M663 455C587 414 521 363 450 310" />
-          <path className="collision-pulse" pathLength="1" d="M246 160C349 244 550 376 663 455" />
+      <div className="collision-stage" aria-label="Seven profiles are reviewed and four MUJ builders form a team">
+        <svg className="collision-network" viewBox="0 0 900 700" aria-hidden="true">
+          <ellipse cx="450" cy="350" rx="346" ry="245" />
+          <path pathLength="1" d="M146 150C258 220 352 284 450 350" />
+          <path pathLength="1" d="M754 150C642 220 548 284 450 350" />
+          <path pathLength="1" d="M146 550C258 486 352 416 450 350" />
+          <path pathLength="1" d="M754 550C642 486 548 416 450 350" />
+          <path className="collision-pulse" pathLength="1" d="M146 150C300 258 600 442 754 550" />
         </svg>
 
         <div className="collision-core">
@@ -107,21 +151,45 @@ export function CollisionSection() {
           <strong>PairUp</strong>
         </div>
 
-        {profiles.map(({ className, role, detail, goal, status, icon: Icon }) => (
-          <article className={"collision-card " + className} key={role}>
-            <div className="collision-card-head">
-              <span className="collision-avatar"><Icon size={18} /></span>
-              <span>PROTOTYPE PROFILE</span>
+        {profiles.map(({ className, name, role, detail, goal, status, university, decision, icon: Icon }, index) => (
+          <article
+            className={"collision-card " + className + " is-" + decision}
+            aria-hidden={phase === "building" && decision === "rejected"}
+            key={name ?? role}
+            style={{ "--swipe-delay": String(index * 0.82) + "s" } as CSSProperties}
+          >
+            <header className="collision-profile-header">
+              <span><BrandMark /> PairUp</span>
+              <span>PROFILE {String(index + 1).padStart(2, "0")}</span>
+            </header>
+
+            <div className="collision-profile-photo" aria-label="Profile photo placeholder">
+              <UserRound />
+              <span className="collision-photo-role"><Icon /></span>
             </div>
-            <h3>{role}</h3>
-            <p>{detail}</p>
-            <div className="collision-card-fields">
-              <span>First name</span>
-              <span>University</span>
-            </div>
-            <div className="collision-card-foot">
-              <span>{goal}</span>
-              <strong>{status}</strong>
+
+            <div className="collision-profile-body">
+              <div className="collision-profile-title">
+                <span>{status}</span>
+                <h3>{name ?? role}</h3>
+                <p>{role} · {detail}</p>
+              </div>
+
+              <div className="collision-profile-fields">
+                <div>
+                  <span>Name</span>
+                  <strong>{name ?? role}</strong>
+                </div>
+                <div>
+                  <span>College</span>
+                  <strong>{university}</strong>
+                </div>
+              </div>
+
+              <div className="collision-profile-foot">
+                <span>{goal}</span>
+                <strong>{university}</strong>
+              </div>
             </div>
           </article>
         ))}

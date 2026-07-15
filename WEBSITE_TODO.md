@@ -50,7 +50,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] After a short pause, show: "Build better. Together."
 - [x] Remove the duplicate "the greatest ideas deserve the best team." line.
 - [x] Primary CTA: "Find your Dream Team".
-- [x] Move the early-member line to the top right and route it to the approved signup card.
+- [x] Keep the early-member line as plain text: top-left on desktop and centered on mobile.
 - [x] Keep the first viewport focused enough to create anticipation.
 - [x] Ensure the first viewport still answers what PairUp is, who it is for, why it matters, and what to do next.
 
@@ -121,6 +121,15 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Keep all statements accessible without relying on animation.
 - [x] Define reduced-motion behavior as a readable stacked sequence.
 
+## Named Statement Revision
+
+- [x] Remove the "02" index from the problem-section heading.
+- [x] Use Yash Y., Hriday kad., Mishra S., Aditya Ray., and Aarav M. above the five statements.
+- [x] Replace generic persona labels such as "The specialist."
+- [x] Change the visible skill set with each active statement.
+- [x] Remove decorative dots from every problem-section skill pill.
+- [x] Keep the name and skill transitions autonomous without requiring scroll.
+
 ## Skill Signals
 
 - [x] React.
@@ -185,7 +194,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 
 ## Central Promise
 
-- [x] Show: "Your next great team may already be here."
+- [x] Show: "Your next great team is already here."
 - [ ] Optional supporting line: "The people you need are closer than you think."
 - [ ] Ask before choosing whether the optional supporting line is visible.
 - [x] Make this the first clear moment where PairUp becomes the answer.
@@ -225,6 +234,22 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Keep the glow controlled and avoid neon treatment.
 - [x] Provide a static completed-team reduced-motion state.
 
+## Swipe Integration Revision
+
+- [x] Show: "Swipe to find your people!"
+- [x] Review seven profile cards in one automatic sequence.
+- [x] Reject three anonymous role cards left with a prominent pastel-red edge.
+- [x] Accept four cards right with a prominent pastel-green edge.
+- [x] Resolve the accepted team into Agrima, Ria, Shreshth, and Yash.
+- [x] Show MUJ for all seven profile cards.
+- [x] Keep Shreyas, Aroh, and Anvay out of the rendered experience.
+- [x] Connect only the final four accepted cards to the PairUp centre.
+- [x] Present exactly one large profile card in the centre at a time.
+- [x] Reuse the approved signup profile-card visual language.
+- [x] Show Name and College fields rather than a phone field in the collision deck.
+- [x] Leave a clear placeholder for every profile image.
+- [x] Morph accepted cards into the smaller final team profiles.
+
 ## Compatible How-It-Works Content
 
 - [x] Represent "Create your builder profile" within the forming profile cards.
@@ -246,56 +271,56 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 
 ## Heading
 
-- [ ] Use "Something is already forming." or "Builders are already showing up."
-- [ ] Ask before choosing the final heading.
+- [x] Use "Something is already forming." or "Builders are already showing up."
+- [x] Ask before choosing the final heading.
 
 ## Activity Stream
 
-- [ ] Support: "A designer joined from Jaipur."
-- [ ] Support: "Three AI builders are looking for a fourth teammate."
-- [ ] Support: "A product idea in sustainability is looking for a developer."
-- [ ] Support: "Someone reserved the username 'pixelpilot.'"
-- [ ] Support: "Five new builders joined today."
-- [ ] Treat these as configurable pitch/demo activity unless connected to real data.
-- [ ] Replace or clearly label demo activity before public release.
+- [x] Support: "A designer joined from Jaipur."
+- [x] Support: "Three AI builders are looking for a fourth teammate."
+- [x] Support: "A product idea in sustainability is looking for a developer."
+- [x] Support: "Someone reserved the username 'pixelpilot.'"
+- [x] Support: "Five new builders joined today."
+- [x] Treat these as configurable pitch/demo activity unless connected to real data.
+- [x] Replace or clearly label demo activity before public release.
 
 ## Momentum Numbers
 
-- [ ] Support a config-controlled "early builders" count.
-- [ ] Support a config-controlled "active ideas" count.
-- [ ] Support a config-controlled "universities represented" count.
-- [ ] Support a config-controlled "teams forming" count.
-- [ ] Use the design examples 248, 37, 12, and 68 only as demo fixtures.
-- [ ] Keep all values in one typed configuration file.
+- [x] Support a config-controlled "early builders" count.
+- [x] Support a config-controlled "active ideas" count.
+- [x] Support a config-controlled "universities represented" count.
+- [x] Support a config-controlled "teams forming" count.
+- [x] Use the design examples 248, 37, 12, and 68 only as demo fixtures.
+- [x] Keep all values in one typed configuration file.
 - [ ] Replace demo values with real data when available.
-- [ ] Avoid layout shift when values change.
+- [x] Avoid layout shift when values change.
 
 ## Visual Style
 
-- [ ] Make PairUp feel alive rather than like an empty pre-launch platform.
-- [ ] Build a living digital-city signal field, not a traditional analytics dashboard.
-- [ ] Let activity messages enter, leave, and rearrange.
-- [ ] Use small profile or avatar circles moving through the scene.
-- [ ] Let skill tags flow continuously.
-- [ ] Keep the activity integrated with the cinematic environment.
+- [x] Make PairUp feel alive rather than like an empty pre-launch platform.
+- [x] Build a living digital-city signal field, not a traditional analytics dashboard.
+- [x] Let activity messages enter, leave, and rearrange.
+- [x] Use small profile or avatar circles moving through the scene.
+- [x] Let skill tags flow continuously.
+- [x] Keep the activity integrated with the cinematic environment.
 
 ## Motion
 
-- [ ] Count numbers upward when the chapter enters.
-- [ ] Slide activity messages gently into a queue.
-- [ ] Light profile circles one by one.
-- [ ] Let a thin line travel between university labels.
-- [ ] Suggest that PairUp continues operating when the visitor is not interacting.
-- [ ] Keep motion calm enough for scanning.
-- [ ] Provide a static reduced-motion queue.
+- [x] Count numbers upward when the chapter enters.
+- [x] Slide activity messages gently into a queue.
+- [x] Light profile circles one by one.
+- [x] Let a thin line travel between university labels.
+- [x] Suggest that PairUp continues operating when the visitor is not interacting.
+- [x] Keep motion calm enough for scanning.
+- [x] Provide a static reduced-motion queue.
 
 ## Chapter 4 Review
 
-- [ ] Review the live-looking activity at the live URL.
-- [ ] Verify demo values are isolated in configuration.
-- [ ] Verify the scene does not resemble a dashboard template.
-- [ ] Verify mobile and reduced-motion states.
-- [ ] Run the production build.
+- [x] Review the live-looking activity at the live URL.
+- [x] Verify demo values are isolated in configuration.
+- [x] Verify the scene does not resemble a dashboard template.
+- [x] Verify mobile and reduced-motion states.
+- [x] Run the production build.
 
 # Chapter 5 - Build Anything
 
@@ -468,6 +493,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Invalid-name and invalid-number recovery.
 - [x] External black cross control clears the profile.
 - [x] Mobile fit without horizontal overflow.
+- [x] Remove the LIVE pill from the signup profile.
 - [ ] Integrate it into the connected final network without redesigning its approved core.
 - [x] Connect every current primary CTA to this card.
 
@@ -528,16 +554,16 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 
 ## Exact Palette
 
-- [ ] Base deep black-blue: #070912.
-- [ ] Primary electric violet: #7B61FF.
-- [ ] Human accent warm coral: #FF6B6B.
-- [ ] Secondary signal cyan: #5DE4FF.
-- [ ] Primary text: #F7F7FB.
-- [ ] Secondary text: #A7A9B8.
-- [ ] Badge: violet, cyan, silver, and a slight warm highlight.
-- [ ] Reconcile the current coral token with #FF6B6B while preserving the approved swipe-card composition.
-- [ ] Keep violet and cyan controlled so the page does not become neon or one-note.
-- [ ] Use black and bone terrain to balance the cobalt environment.
+- [x] Base deep black-blue: #070912.
+- [x] Primary pastel violet: #8978CF.
+- [x] Human accent pastel coral: #E98B7F.
+- [x] Secondary pastel signal cyan: #8ACBD2.
+- [x] Primary text: #F7F7FB.
+- [x] Secondary text: #A7A9B8.
+- [x] Badge: pastel violet, cyan, silver, and a slight warm highlight.
+- [x] Preserve the approved swipe-card composition while softening coral.
+- [x] Keep violet and cyan controlled so the page does not become neon or one-note.
+- [x] Use black and bone terrain to balance the cobalt environment.
 
 # Typography
 
@@ -575,7 +601,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [ ] Pin only scenes that need time to communicate.
 - [ ] Keep the hero fixed while isolated dots appear when appropriate.
 - [ ] Converge profile cards through the Chapter 3 scroll scene.
-- [ ] Count activity numbers when Chapter 4 enters.
+- [x] Count activity numbers when Chapter 4 enters.
 - [ ] Rotate and reveal Founding Builder perks in Chapter 6.
 - [ ] Settle the final network behind the signup in Chapter 8.
 - [ ] Avoid excessive pinning on mobile.

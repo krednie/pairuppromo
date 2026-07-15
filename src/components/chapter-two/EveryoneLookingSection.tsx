@@ -1,28 +1,36 @@
 import { useEffect, useState } from "react"
 
 const voices = [
-  { label: "THE IDEA PERSON", quote: "I have the idea. I need someone who can build it.", mark: "ID" },
-  { label: "THE DEVELOPER", quote: "I can code, but I need a designer.", mark: "DV" },
-  { label: "THE HACKATHON BUILDER", quote: "I want to join hackathons, but I never find the right team.", mark: "HK" },
-  { label: "THE SPECIALIST", quote: "I have skills. I just don't know the right people.", mark: "SK" },
-  { label: "THE AMBITIOUS STUDENT", quote: "I'm ready to build something beyond assignments.", mark: "BU" },
-]
-
-const skills = [
-  { name: "Idea", className: "skill-idea", phase: "one", x: -150, y: -65 },
-  { name: "Frontend", className: "skill-frontend", phase: "one", x: -180, y: 28 },
-  { name: "React", className: "skill-react", phase: "one", x: -130, y: 75 },
-  { name: "Backend", className: "skill-backend", phase: "one", x: 170, y: -44 },
-  { name: "UI/UX", className: "skill-design", phase: "two", x: 190, y: -72 },
-  { name: "Product", className: "skill-product", phase: "two", x: -160, y: 45 },
-  { name: "Pitching", className: "skill-pitch", phase: "two", x: 145, y: 58 },
-  { name: "AI/ML", className: "skill-ai", phase: "two", x: 175, y: 32 },
-  { name: "Research", className: "skill-research", phase: "three", x: -165, y: -48 },
-  { name: "Mobile", className: "skill-mobile", phase: "three", x: 170, y: 38 },
-  { name: "Data", className: "skill-data", phase: "three", x: -145, y: 62 },
-  { name: "Video", className: "skill-video", phase: "three", x: 160, y: -55 },
-  { name: "Content", className: "skill-content", phase: "three", x: 130, y: 64 },
-  { name: "Hardware", className: "skill-hardware", phase: "three", x: -165, y: 24 },
+  {
+    label: "Yash Y.",
+    quote: "I have the idea. I need someone who can build it.",
+    mark: "YY",
+    skills: ["Idea", "Frontend", "Backend", "React"],
+  },
+  {
+    label: "Hriday kad.",
+    quote: "I can code, but I need a designer.",
+    mark: "HK",
+    skills: ["React", "UI/UX", "Research", "Product"],
+  },
+  {
+    label: "Mishra S.",
+    quote: "I want to join hackathons, but I never find the right team.",
+    mark: "MS",
+    skills: ["AI/ML", "Pitching", "Product", "Hardware"],
+  },
+  {
+    label: "Aditya Ray.",
+    quote: "I have skills. I just don't know the right people.",
+    mark: "AR",
+    skills: ["Research", "Data", "Mobile", "Content"],
+  },
+  {
+    label: "Aarav M.",
+    quote: "I'm ready to build something beyond assignments.",
+    mark: "AM",
+    skills: ["Video", "Hardware", "Backend", "AI/ML"],
+  },
 ]
 
 function voicePosition(index: number, activeIndex: number) {
@@ -47,11 +55,8 @@ export function EveryoneLookingSection() {
     <section id="signals" className="looking-section" aria-labelledby="looking-title">
       <div className="looking-sticky">
         <header className="looking-header">
-          <span className="looking-index">02</span>
-          <div>
-            <p>Everyone is looking for someone</p>
-            <h2 id="looking-title">You are not the only one struggling to find the right people.</h2>
-          </div>
+          <p>Everyone is looking for someone</p>
+          <h2 id="looking-title">You are not the only one struggling to find the right people.</h2>
         </header>
 
         <div className="looking-signal-field" aria-hidden="true">
@@ -60,19 +65,17 @@ export function EveryoneLookingSection() {
             <path className="looking-link looking-link-developer" pathLength="1" d="M700 444C865 319 1030 278 1265 325" />
             <path className="looking-link looking-link-designer" pathLength="1" d="M918 615C1078 557 1170 490 1301 438" />
           </svg>
-          {skills.map((skill) => (
-            <span
-              className={"looking-skill " + skill.className}
-              data-phase={skill.phase}
-              data-start-x={skill.x}
-              data-start-y={skill.y}
-              key={skill.name}
-              style={{ animationDelay: String((skills.indexOf(skill) % 7) * -0.7) + "s" }}
-            >
-              <i />
-              {skill.name}
-            </span>
-          ))}
+          <div className="looking-skill-set" key={activeIndex}>
+            {voices[activeIndex].skills.map((skill, index) => (
+              <span
+                className={"looking-skill looking-skill-slot-" + (index + 1)}
+                style={{ animationDelay: String(index * 0.09) + "s" }}
+                key={skill}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="looking-voices">
@@ -91,9 +94,7 @@ export function EveryoneLookingSection() {
             </article>
           ))}
         </div>
-
       </div>
     </section>
   )
 }
-

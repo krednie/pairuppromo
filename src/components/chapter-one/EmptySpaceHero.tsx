@@ -40,9 +40,9 @@ export function EmptySpaceHero({ topBarVisible, onJoin }: EmptySpaceHeroProps) {
           <MajesticSignalScene />
         </div>
 
-        <button className="empty-space-secondary" type="button" onClick={onJoin}>
+        <p className="empty-space-secondary">
           Early members get a permanent Founding Builder badge, referral perks, and priority access.
-        </button>
+        </p>
 
         <div className="empty-space-content">
           <a className="empty-space-brand" href="#top" aria-label="PairUp home">
