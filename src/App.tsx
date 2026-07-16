@@ -39,8 +39,6 @@ export default function App() {
     }
 
     const context = gsap.context(() => {
-      const formationNodes = gsap.utils.toArray<HTMLElement>(".team-node")
-      const compactFormation = window.innerWidth < 800 ? 0.42 : 1
 
       if (reducedMotion) {
         gsap.set(".empty-space-opening, .empty-space-brand, .empty-space-title-line > span, .empty-space-magnetic-zone, .empty-space-secondary, .empty-space-scroll, .majestic-builder, .majestic-terrain", {
@@ -48,8 +46,6 @@ export default function App() {
           y: 0,
           filter: "blur(0px)",
         })
-        gsap.set(".team-connection", { strokeDashoffset: 0 })
-        gsap.set(".formation-core, .formation-result", { opacity: 1, scale: 1 })
         return
       }
 
@@ -57,7 +53,7 @@ export default function App() {
       intro
         .from(".empty-space-brand", { y: -10, opacity: 0, duration: 0.72 })
         .from(".empty-space-secondary", { y: -8, opacity: 0, duration: 0.72 }, 0.12)
-        .from(".empty-space-title-line > span", { yPercent: 112, opacity: 0, filter: "blur(9px)", duration: 1.05, stagger: 0.16 }, 0.3)
+        .from(".empty-space-title-line > span", { yPercent: 0, opacity: 0, filter: "blur(18px)", duration: 1.15, stagger: 0.14 }, 0.3)
         .from(".empty-space-opening", { y: 10, opacity: 0, filter: "blur(6px)", duration: 0.75 }, 0.78)
         .from(".empty-space-magnetic-zone", { y: 11, opacity: 0, duration: 0.62 }, 0.88)
         .from(".majestic-terrain-rear", { y: 60, opacity: 0, duration: 1.35 }, 0.2)
@@ -89,66 +85,6 @@ export default function App() {
           scrub: true,
         },
       })
-
-      gsap.set(formationNodes, {
-        x: (_, element) =>
-          Number((element as HTMLElement).dataset.startX || 0) * compactFormation,
-        y: (_, element) =>
-          Number((element as HTMLElement).dataset.startY || 0) * compactFormation,
-        opacity: 0.18,
-        scale: 0.84,
-      })
-      gsap.set(".team-connection", { strokeDasharray: 1, strokeDashoffset: 1 })
-      gsap.set(".connection-pulse", { strokeDasharray: "0.1 0.9", strokeDashoffset: 0 })
-      gsap.set(".formation-core", { opacity: 0.32, scale: 0.7, rotate: -12 })
-      gsap.set(".formation-result", { opacity: 0, y: 14 })
-
-      const formationTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".team-formation",
-          start: "top 68%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      })
-
-      formationTimeline
-        .to(
-          formationNodes,
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.82,
-            stagger: 0.11,
-            ease: "power2.inOut",
-          },
-          0.08,
-        )
-        .to(
-          ".team-connection",
-          {
-            strokeDashoffset: 0,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: "power2.inOut",
-          },
-          0.72,
-        )
-        .to(
-          ".formation-core",
-          {
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            duration: 0.65,
-            ease: "back.out(1.4)",
-          },
-          1.24,
-        )
-        .to(".connection-pulse", { strokeDashoffset: -1, duration: 1.1, ease: "none" }, 1.48)
-        .to(".formation-result", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.82)
 
       const swipeHint = gsap.timeline({
         scrollTrigger: {

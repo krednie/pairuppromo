@@ -74,6 +74,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 ## Motion
 
 - [x] Reveal headline letters with slight blur that sharpens into focus.
+- [x] Reveal both hero headline lines from blur only, with no vertical slide or clipped underline entrance.
 - [x] Let background dots drift independently.
 - [x] Attract some dots subtly toward the pointer.
 - [x] Give the primary CTA a firm magnetic response that follows the pointer on hover.
@@ -127,6 +128,12 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Use Yash Y., Hriday kad., Mishra S., Aditya Ray., and Aarav M. above the five statements.
 - [x] Replace generic persona labels such as "The specialist."
 - [x] Change the visible skill set with each active statement.
+- [x] Keep all fourteen skill pills visible and only sharpen the four linked to the active voice.
+- [x] Preserve each pill as a stable node instead of replacing four labels in one position.
+- [x] Reset inherited pill insets so Frontend, Backend, and React remain content-sized instead of stretching into panels.
+- [x] Replace page-crossing jali shimmer with two overlaid meshes that breathe naturally and follow a smoothed cursor offset.
+- [x] Center the problems heading and helper, and increase their visual scale by roughly 50%.
+- [x] Add a slow dreamy jali drift and shimmer while preserving a flat-color background.
 - [x] Remove decorative dots from every problem-section skill pill.
 - [x] Keep the name and skill transitions autonomous without requiring scroll.
 
@@ -180,6 +187,12 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Replace "Not just people you already know." with "Expand your circle."
 - [x] Remove the "02 HOW IT WORKS" label.
 - [x] Run the people-coming-together vector automatically after entry instead of scrubbing it with scroll.
+- [x] Replace the role-node graphic with a dense pointer-responsive star field.
+- [x] Expand the dense star field across the complete section on desktop and mobile.
+- [x] Make individual stars oscillate between dim and bright while preserving pointer response.
+- [x] Form one autonomous two-to-five-person constellation at a time without a PairUp centre step.
+- [x] Use shooting stars to draw the team links, then transform the team points into coral profile circles.
+- [x] Expand each completed team by 30%, blur-dissolve it, restore the star field, and begin the next pattern.
 
 ## Chapter 2 Review
 
@@ -247,8 +260,16 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Present exactly one large profile card in the centre at a time.
 - [x] Reuse the approved signup profile-card visual language.
 - [x] Show Name and College fields rather than a phone field in the collision deck.
-- [x] Leave a clear placeholder for every profile image.
+- [x] Load the seven generated coral WebP portraits and keep every generated SVG out of the website.
 - [x] Morph accepted cards into the smaller final team profiles.
+- [x] Match the collision deck to the taller portrait ratio of the approved bottom signup card.
+- [x] Add one stationary X and check control pair for all seven automatic decisions.
+- [x] Synchronize each control press and bounce with its card swipe direction.
+- [x] Use the same coral treatment for all seven profile-image placeholders.
+- [x] Use solid cobalt section backgrounds with restrained Rajasthan-inspired mesh patterns.
+- [x] Give the problems, constellation, and collision sections distinct flat blue fields and distinct low-opacity Jaipur-inspired meshes.
+- [x] Make the central PairUp mark a single circular black-glass surface and remove its inner and outer rings.
+- [x] Add a restrained animated jali shimmer to the collision section so the open field does not feel empty.
 
 ## Compatible How-It-Works Content
 
@@ -260,6 +281,8 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Avoid building a full Tinder-style swipe deck.
 
 ## Chapter 3 Review
+- [x] Verify zero accidental section gaps and zero horizontal overflow on desktop and mobile.
+- [x] Document the complete Gemini context bundle, copy-paste prompts, technical contracts, and acceptance tests in `ASSET_GENERATION.md`.
 
 - [x] Review convergence and orbit at the live URL.
 - [x] Verify the team composition is understandable without motion.
@@ -275,24 +298,31 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Ask before choosing the final heading.
 
 ## Activity Stream
+- [x] Replace product-activity claims with approved pre-launch status statements.
+- [x] Use the supplied pass-four statements for priority matching, the first-250 badge, university connections, startup circles, and "Built by us. For us."
+- [x] Remove claims that imply ideas, active teams, or matching already exist before launch.
+- [x] Ask for approval before writing the replacement carousel copy.
 
-- [x] Support: "A designer joined from Jaipur."
-- [x] Support: "Three AI builders are looking for a fourth teammate."
-- [x] Support: "A product idea in sustainability is looking for a developer."
-- [x] Support: "Someone reserved the username 'pixelpilot.'"
-- [x] Support: "Five new builders joined today."
-- [x] Treat these as configurable pitch/demo activity unless connected to real data.
-- [x] Replace or clearly label demo activity before public release.
+- [x] Remove the obsolete designer-joined demo claim.
+- [x] Remove the obsolete active-team demo claim.
+- [x] Remove the obsolete active-idea demo claim.
+- [x] Remove the obsolete invented-username demo claim.
+- [x] Remove the obsolete daily-activity demo claim.
+- [x] Keep the approved pre-launch status statements in typed configuration.
+- [x] Remove the demo-activity label and unsupported live-product claims.
 
 ## Momentum Numbers
+- [x] Replace the four speculative demo counters with one approved `100+ early builders` metric.
+- [x] Remove active ideas, universities represented, and teams forming.
+- [x] Remove or redesign the university signal map so it does not claim multiple universities.
 
 - [x] Support a config-controlled "early builders" count.
-- [x] Support a config-controlled "active ideas" count.
-- [x] Support a config-controlled "universities represented" count.
-- [x] Support a config-controlled "teams forming" count.
-- [x] Use the design examples 248, 37, 12, and 68 only as demo fixtures.
+- [x] Remove the config-controlled active-ideas counter.
+- [x] Remove the config-controlled universities counter.
+- [x] Remove the config-controlled teams-forming counter.
+- [x] Remove the speculative 248, 37, 12, and 68 demo fixtures.
 - [x] Keep all values in one typed configuration file.
-- [ ] Replace demo values with real data when available.
+- [x] Use the approved 100+ early-builder value and remove unsupported values.
 - [x] Avoid layout shift when values change.
 
 ## Visual Style
@@ -317,7 +347,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 ## Chapter 4 Review
 
 - [x] Review the live-looking activity at the live URL.
-- [x] Verify demo values are isolated in configuration.
+- [x] Verify the approved pre-launch value and statements are isolated in configuration.
 - [x] Verify the scene does not resemble a dashboard template.
 - [x] Verify mobile and reduced-motion states.
 - [x] Run the production build.

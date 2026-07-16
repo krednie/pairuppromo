@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 368 368" width="368" height="368" fill="none">
+  <!-- Seamless Orthogonal Streets (Bone #F7F7FB with 1px stroke weight) -->
+  <g stroke="#F7F7FB" stroke-width="1" opacity="0.8">
+    <!-- Continuous Main Streets (cross the entire tile to tile seamlessly) -->
+    <line x1="0" y1="92" x2="368" y2="92" />
+    <line x1="0" y1="276" x2="368" y2="276" />
+    <line x1="92" y1="0" x2="92" y2="368" />
+    <line x1="276" y1="0" x2="276" y2="368" />
+    
+    <!-- Secondary Streets -->
+    <line x1="0" y1="184" x2="92" y2="184" />
+    <line x1="276" y1="184" x2="368" y2="184" />
+    <line x1="184" y1="0" x2="184" y2="92" />
+    <line x1="184" y1="276" x2="184" y2="368" />
+    
+    <!-- Courtyard 1 (Top-Right Offset Block) -->
+    <rect x="138" y="46" width="46" height="46" />
+    <rect x="148" y="56" width="26" height="26" stroke-dasharray="2,2" />
+    
+    <!-- Courtyard 2 (Bottom-Left Offset Block) -->
+    <rect x="46" y="138" width="46" height="46" />
+    <rect x="56" y="148" width="26" height="26" stroke-dasharray="2,2" />
+    
+    <!-- Inner Architectural Grid Blocks (Center & Offsets) -->
+    <rect x="184" y="184" width="92" height="92" />
+    <line x1="230" y1="184" x2="230" y2="276" />
+    <line x1="184" y1="230" x2="276" y2="230" />
+    
+    <!-- Edge loops for tiling -->
+    <line x1="0" y1="46" x2="46" y2="46" />
+    <line x1="322" y1="46" x2="368" y2="46" />
+    <line x1="46" y1="0" x2="46" y2="46" />
+    <line x1="46" y1="322" x2="46" y2="368" />
+    
+    <line x1="0" y1="322" x2="46" y2="322" />
+    <line x1="322" y1="322" x2="368" y2="322" />
+    <line x1="322" y1="0" x2="322" y2="46" />
+    <line x1="322" y1="322" x2="322" y2="368" />
+  </g>
+  
+  <!-- Coral Registration Points (Warm Coral #FF6B6B, one per quadrant) -->
+  <g fill="#FF6B6B">
+    <circle cx="69" cy="69" r="2" />
+    <circle cx="299" cy="69" r="2" />
+    <circle cx="69" cy="299" r="2" />
+    <circle cx="299" cy="299" r="2" />
+  </g>
+</svg>

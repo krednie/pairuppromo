@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="100%" height="100%" fill="none">
+  <!-- Off-center circular portrait window and Rajasthan arch (1.2px stroke weight) -->
+  <g stroke-width="1.2">
+    <!-- Rajasthan Arch contour behind the window (Bone #F7F7FB) -->
+    <path d="M 310 250 L 310 130 C 310 70, 450 70, 450 130 L 450 250" stroke="#F7F7FB" stroke-opacity="0.3" stroke-dasharray="4,4" />
+    <path d="M 330 250 L 330 140 C 330 90, 430 90, 430 140 L 430 250" stroke="#F7F7FB" stroke-opacity="0.2" />
+    
+    <!-- Circular portrait window frame (Bone #F7F7FB) -->
+    <circle cx="380" cy="140" r="90" stroke="#F7F7FB" stroke-opacity="0.8" />
+    
+    <!-- Inner nested ring (Cyan #5DE4FF) -->
+    <circle cx="380" cy="140" r="82" stroke="#5DE4FF" stroke-opacity="0.5" />
+    
+    <!-- Constellation lines traveling through the frame (Cyan #5DE4FF & Bone #F7F7FB) -->
+    <path d="M 50 140 L 180 80 L 320 180 L 380 140 L 480 60" stroke="#5DE4FF" stroke-opacity="0.6" />
+    
+    <!-- Secondary constellation branch -->
+    <path d="M 180 80 L 220 200 L 320 180" stroke="#F7F7FB" stroke-opacity="0.4" />
+    
+    <!-- Star/Node Vertices -->
+    <g fill="#5DE4FF">
+      <circle cx="50" cy="140" r="3.5" />
+      <circle cx="320" cy="180" r="3.5" />
+      <circle cx="480" cy="60" r="3.5" />
+    </g>
+    <g fill="#F7F7FB">
+      <circle cx="180" cy="80" r="3" />
+      <circle cx="220" cy="200" r="3" />
+      <circle cx="380" cy="140" r="2.5" />
+    </g>
+  </g>
+</svg>

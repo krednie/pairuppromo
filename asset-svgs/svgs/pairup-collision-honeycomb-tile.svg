@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 432 304" width="432" height="304" fill="none">
+  <!-- Bone-colored fine paths (#F7F7FB) with 1.2px stroke weight -->
+  <g stroke="#F7F7FB" stroke-width="1.2" opacity="0.65">
+    
+    <!-- Honeycomb Hexagonal Matrix / Jharokha frames -->
+    <!-- Row 1: Centers at y=76 (x=54, 162, 270, 378) -->
+    <path d="M 54 26 L 108 51 L 108 101 L 54 126 L 0 101 L 0 51 Z" />
+    <path d="M 162 26 L 216 51 L 216 101 L 162 126 L 108 101 L 108 51 Z" />
+    <path d="M 270 26 L 324 51 L 324 101 L 270 126 L 216 101 L 216 51 Z" />
+    <path d="M 378 26 L 432 51 L 432 101 L 378 126 L 324 101 L 324 51 Z" />
+    
+    <!-- Row 2: Centers at y=228 (x=54, 162, 270, 378) -->
+    <path d="M 54 178 L 108 203 L 108 253 L 54 278 L 0 253 L 0 203 Z" />
+    <path d="M 162 178 L 216 203 L 216 253 L 162 278 L 108 253 L 108 203 Z" />
+    <path d="M 270 178 L 324 203 L 324 253 L 270 278 L 216 253 L 216 203 Z" />
+    <path d="M 378 178 L 432 203 L 432 253 L 378 278 L 324 253 L 324 203 Z" />
+    
+    <!-- Intermediates / Row 1.5: Centers at y=152 (x=108, 216, 324) -->
+    <path d="M 108 102 L 162 127 L 162 177 L 108 202 L 54 177 L 54 127 Z" />
+    <path d="M 216 102 L 270 127 L 270 177 L 216 202 L 162 177 L 162 127 Z" />
+    <path d="M 324 102 L 378 127 L 378 177 L 324 202 L 270 177 L 270 127 Z" />
+    
+    <!-- Half loops at borders (Top/Bottom) -->
+    <path d="M 108 0 L 162 26 L 162 51 L 108 76 L 54 51 L 54 26 Z" />
+    <path d="M 216 0 L 270 26 L 270 51 L 216 76 L 162 51 L 162 26 Z" />
+    <path d="M 324 0 L 378 26 L 378 51 L 324 76 L 270 51 L 270 26 Z" />
+    
+    <path d="M 108 228 L 162 253 L 162 304 L 54 304 L 54 253 Z" />
+    <path d="M 216 228 L 270 253 L 270 304 L 162 304 L 162 253 Z" />
+    <path d="M 324 228 L 378 253 L 378 304 L 270 304 L 270 253 Z" />
+    
+    <!-- Inner Jharokha Arches -->
+    <!-- Center (54, 76) -->
+    <path d="M 39 86 C 39 56, 69 56, 69 86 L 69 96 L 54 106 L 39 96 Z" />
+    <!-- Center (162, 76) -->
+    <path d="M 147 86 C 147 56, 177 56, 177 86 L 177 96 L 162 106 L 147 96 Z" />
+    <!-- Center (270, 76) -->
+    <path d="M 255 86 C 255 56, 285 56, 285 86 L 285 96 L 270 106 L 255 96 Z" />
+    <!-- Center (378, 76) -->
+    <path d="M 363 86 C 363 56, 393 56, 393 86 L 393 96 L 378 106 L 363 96 Z" />
+    
+    <!-- Center (54, 228) -->
+    <path d="M 39 238 C 39 208, 69 208, 69 238 L 69 248 L 54 258 L 39 248 Z" />
+    <!-- Center (162, 228) -->
+    <path d="M 147 238 C 147 208, 177 208, 177 238 L 177 248 L 162 258 L 147 248 Z" />
+    <!-- Center (270, 228) -->
+    <path d="M 255 238 C 255 208, 285 208, 285 238 L 285 248 L 270 258 L 255 248 Z" />
+    <!-- Center (378, 228) -->
+    <path d="M 363 238 C 363 208, 393 208, 393 238 L 393 248 L 378 258 L 363 248 Z" />
+
+    <!-- Center (108, 152) -->
+    <path d="M 93 162 C 93 132, 123 132, 123 162 L 123 172 L 108 182 L 93 172 Z" />
+    <!-- Center (216, 152) -->
+    <path d="M 201 162 C 201 132, 231 132, 231 162 L 231 172 L 216 182 L 201 172 Z" />
+    <!-- Center (324, 152) -->
+    <path d="M 309 162 C 309 132, 339 132, 339 162 L 339 172 L 324 182 L 309 172 Z" />
+  </g>
+  
+  <!-- Tiny bone dots at star vertices -->
+  <g fill="#F7F7FB" opacity="0.8">
+    <circle cx="108" cy="51" r="1.5" />
+    <circle cx="216" cy="51" r="1.5" />
+    <circle cx="324" cy="51" r="1.5" />
+    <circle cx="108" cy="203" r="1.5" />
+    <circle cx="216" cy="203" r="1.5" />
+    <circle cx="324" cy="203" r="1.5" />
+  </g>
+  
+  <!-- One Warm Coral Accent Dot (#FF6B6B, centrally located) -->
+  <circle cx="216" cy="152" r="3" fill="#FF6B6B" />
+</svg>

@@ -7,14 +7,27 @@
   padding: clamp(82px, 9vh, 108px) 4vw clamp(64px, 7vh, 88px);
   overflow: hidden;
   color: var(--white);
-  background:
-    linear-gradient(rgba(226, 220, 235, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(226, 220, 235, 0.035) 1px, transparent 1px),
-    linear-gradient(180deg, #090a12 0%, #171844 54%, #090a12 100%);
-  background-size: 72px 72px, 72px 72px, auto;
+  background-color: #24369a;
+  background-image:
+    linear-gradient(45deg, transparent 47%, rgba(239, 233, 213, 0.055) 48% 49%, transparent 50%),
+    linear-gradient(-45deg, transparent 47%, rgba(239, 233, 213, 0.055) 48% 49%, transparent 50%);
+  background-size: 54px 54px;
   isolation: isolate;
 }
 
+.collision-section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  opacity: 0.16;
+  background-image:
+    radial-gradient(ellipse at 50% 100%, transparent 54%, rgba(239, 233, 213, 0.24) 55% 56%, transparent 57%),
+    radial-gradient(circle at center, rgba(239, 233, 213, 0.16) 0 2px, transparent 2.5px);
+  background-position: 0 0, 28px 28px;
+  background-size: 108px 78px, 54px 54px;
+  pointer-events: none;
+}
 .collision-copy {
   position: relative;
   z-index: 12;
@@ -296,9 +309,11 @@
   place-items: center;
   overflow: hidden;
   color: #171821;
-  background:
-    linear-gradient(135deg, transparent 0 44%, rgba(231, 161, 151, 0.74) 44% 63%, transparent 63%),
-    #ddd9ca;
+  background-color: #e98b7f;
+  background-image:
+    linear-gradient(45deg, transparent 47%, rgba(241, 237, 218, 0.14) 48% 49%, transparent 50%),
+    linear-gradient(-45deg, transparent 47%, rgba(241, 237, 218, 0.14) 48% 49%, transparent 50%);
+  background-size: 34px 34px;
   border-bottom: 1px solid rgba(247, 247, 251, 0.1);
 }
 
@@ -331,7 +346,7 @@
   display: grid;
   place-items: center;
   color: #171821;
-  background: #a8ccd0;
+  background: #f1edda;
   border: 1px solid rgba(7, 9, 18, 0.18);
   border-radius: 50%;
 }
@@ -429,6 +444,82 @@
 .collision-profile-foot strong {
   color: #a8ccd0;
   font-weight: 820;
+}
+
+.collision-controls {
+  position: absolute;
+  z-index: 14;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.is-searching .collision-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.is-matched .collision-controls,
+.is-building .collision-controls {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.collision-control {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(239, 233, 213, 0.34);
+  border-radius: 50%;
+  box-shadow: 0 16px 34px rgba(9, 10, 25, 0.22);
+  transform: translateY(0) scale(1);
+}
+
+.collision-control svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.1;
+}
+
+.collision-control-reject {
+  color: #f1edda;
+  background: #161827;
+}
+
+.collision-control-accept {
+  color: #172019;
+  background: #8fc3a8;
+}
+
+.collision-control.is-pressed {
+  animation: collision-control-press 380ms cubic-bezier(0.22, 0.85, 0.25, 1);
+}
+
+.collision-control-reject.is-pressed {
+  color: #211312;
+  background: #df827b;
+  border-color: #efaaa3;
+  box-shadow: 0 12px 30px rgba(223, 130, 123, 0.38);
+}
+
+.collision-control-accept.is-pressed {
+  border-color: #b8dcc9;
+  box-shadow: 0 12px 30px rgba(143, 195, 168, 0.38);
+}
+
+@keyframes collision-control-press {
+  0% { transform: translateY(0) scale(1); }
+  38% { transform: translateY(4px) scale(0.82); }
+  72% { transform: translateY(-2px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
 }
 
 @keyframes collision-profile-accept {
@@ -591,5 +682,162 @@
 
   .collision-network .collision-pulse {
     animation: none;
+  }
+}
+
+/* Flat cobalt honeycomb field and a single black glass PairUp centre. */
+.collision-section {
+  background-color: #24369a;
+  background-image: none;
+}
+
+.collision-section::before {
+  opacity: 0.2;
+  background-image:
+    radial-gradient(ellipse at 50% 100%, transparent 53%, rgba(241, 237, 218, 0.22) 54% 56%, transparent 57%),
+    radial-gradient(circle at center, rgba(233, 139, 127, 0.36) 0 1.4px, transparent 1.8px);
+  background-position: 0 0, 54px 38px;
+  background-size: 108px 76px, 108px 76px;
+}
+
+.collision-core {
+  width: 132px;
+  height: 132px;
+  aspect-ratio: 1;
+  color: #f1edda;
+  background: rgba(5, 6, 12, 0.92);
+  border: 1px solid rgba(241, 237, 218, 0.3);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 28px 70px rgba(5, 6, 18, 0.34);
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
+}
+
+.collision-core::before,
+.collision-core::after {
+  display: none;
+}
+
+/* A moving highlight gives the collision jali the same depth as the star field. */
+.collision-section::before {
+  animation: collision-jali-drift 20s ease-in-out infinite alternate;
+}
+
+.collision-section::after {
+  position: absolute;
+  z-index: -1;
+  inset: -16%;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+  background-image:
+    radial-gradient(ellipse at 50% 100%, transparent 53%, rgba(241, 237, 218, 0.34) 54% 56%, transparent 57%),
+    radial-gradient(circle at center, rgba(233, 139, 127, 0.5) 0 1.2px, transparent 1.7px);
+  background-position: 0 0, 54px 38px;
+  background-size: 108px 76px, 108px 76px;
+  mask-image: linear-gradient(112deg, transparent 34%, #000 47%, #000 53%, transparent 66%);
+  animation: collision-jali-shimmer 11s ease-in-out infinite;
+}
+
+@keyframes collision-jali-drift {
+  from { background-position: 0 0, 54px 38px; }
+  to { background-position: 28px 12px, 70px 50px; }
+}
+
+@keyframes collision-jali-shimmer {
+  0%, 14% { transform: translateX(-22%); opacity: 0; }
+  38%, 62% { opacity: 0.32; }
+  86%, 100% { transform: translateX(22%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collision-section::before,
+  .collision-section::after {
+    animation: none;
+  }
+
+  .collision-section::after {
+    display: none;
+  }
+}
+
+/* The inverted-arch jali breathes in layered depth instead of crossing the page. */
+.collision-section {
+  --jali-x: 0px;
+  --jali-y: 0px;
+}
+
+.collision-section::before {
+  will-change: transform;
+  animation: collision-jali-breathe-base 21s ease-in-out infinite;
+}
+
+.collision-section::after {
+  inset: -32px;
+  opacity: 0.16;
+  mask-image: none;
+  will-change: transform;
+  animation: collision-jali-breathe-overlay 17s ease-in-out infinite;
+}
+
+@keyframes collision-jali-breathe-base {
+  0%, 100% {
+    transform: translate(calc(var(--jali-x) - 4px), calc(var(--jali-y) + 3px)) scale(1.004);
+  }
+  50% {
+    transform: translate(calc(var(--jali-x) + 5px), calc(var(--jali-y) - 4px)) scale(1.009);
+  }
+}
+
+@keyframes collision-jali-breathe-overlay {
+  0%, 100% {
+    transform: translate(calc(var(--jali-x) - 12px), calc(var(--jali-y) + 8px)) scale(1.006);
+    opacity: 0.12;
+  }
+  52% {
+    transform: translate(calc(var(--jali-x) + 12px), calc(var(--jali-y) - 9px)) scale(1.014);
+    opacity: 0.22;
+  }
+}
+
+.collision-card {
+  width: min(350px, 82vw);
+  min-height: 500px;
+}
+
+.collision-profile-photo {
+  height: 210px;
+}
+
+.collision-profile-photo > img {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 24%;
+}
+
+@media (max-width: 540px) {
+  .collision-card {
+    width: min(310px, 80vw);
+    min-height: 470px;
+  }
+
+  .collision-profile-photo {
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collision-section::before,
+  .collision-section::after {
+    animation: none;
+    transform: none;
   }
 }

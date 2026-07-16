@@ -499,3 +499,228 @@
   }
 }
 
+
+/* Solid Jaipur-grid field: color remains flat; the lines are a low-opacity pattern. */
+.looking-section {
+  background-color: #30377d;
+  background-image: none;
+}
+
+.looking-sticky::before {
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(241, 237, 218, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 237, 218, 0.16) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(233, 139, 127, 0.5) 0 1.5px, transparent 2px);
+  background-position: 0 0, 0 0, 46px 46px;
+  background-size: 92px 92px, 92px 92px, 184px 184px;
+  mask-image: none;
+}
+
+.looking-sticky::after {
+  display: none;
+}
+
+/* Dreamy signal field: stable skills, centered copy, and a moving jali highlight. */
+.looking-header {
+  left: 50%;
+  width: min(780px, 90vw);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.looking-header p {
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.15;
+}
+
+.looking-header h2 {
+  max-width: 650px;
+  margin: 15px auto 0;
+  color: rgba(247, 247, 251, 0.7);
+  font-size: clamp(18px, 1.55vw, 22px);
+  line-height: 1.42;
+}
+
+.looking-sticky::before {
+  opacity: 0.19;
+  background-image:
+    linear-gradient(45deg, transparent 47%, rgba(241, 237, 218, 0.16) 48% 52%, transparent 53%),
+    linear-gradient(-45deg, transparent 47%, rgba(241, 237, 218, 0.12) 48% 52%, transparent 53%),
+    radial-gradient(circle at center, rgba(233, 139, 127, 0.55) 0 1.3px, transparent 1.8px);
+  background-position: 0 0, 0 0, 34px 34px;
+  background-size: 68px 68px, 68px 68px, 136px 136px;
+  animation: looking-jali-drift 18s ease-in-out infinite alternate;
+}
+
+.looking-sticky::after {
+  position: absolute;
+  z-index: -1;
+  inset: -18%;
+  display: block;
+  content: "";
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(45deg, transparent 48%, rgba(241, 237, 218, 0.32) 49% 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(233, 139, 127, 0.24) 49% 51%, transparent 52%);
+  background-size: 136px 136px;
+  mask-image: linear-gradient(105deg, transparent 32%, #000 46%, #000 52%, transparent 66%);
+  animation: looking-jali-shimmer 10s ease-in-out infinite;
+}
+
+.looking-skill {
+  inset: auto;
+  width: max-content;
+  max-width: max-content;
+  height: auto;
+  opacity: 0.2;
+  filter: blur(2.4px);
+  animation: looking-skill-float 7.2s ease-in-out infinite alternate;
+  transition:
+    opacity 520ms var(--ease-pairup),
+    filter 520ms var(--ease-pairup),
+    color 520ms var(--ease-pairup),
+    background-color 520ms var(--ease-pairup),
+    border-color 520ms var(--ease-pairup),
+    box-shadow 520ms var(--ease-pairup);
+}
+
+.looking-skill.is-linked {
+  z-index: 3;
+  color: #f4f0d9;
+  background: rgba(8, 10, 24, 0.76);
+  border-color: rgba(233, 139, 127, 0.62);
+  box-shadow: 0 14px 38px rgba(6, 8, 24, 0.24), 0 0 24px rgba(241, 237, 218, 0.08);
+  opacity: 0.96;
+  filter: blur(0);
+}
+
+.looking-skill.is-distant {
+  opacity: 0.2;
+  filter: blur(2.4px);
+}
+
+.looking-skill-slot-1 { top: 22%; left: 3%; }
+.looking-skill-slot-2 { top: 36%; left: 7%; }
+.looking-skill-slot-3 { top: 52%; left: 3%; }
+.looking-skill-slot-4 { top: 69%; left: 8%; }
+.looking-skill-slot-5 { top: 84%; left: 15%; }
+.looking-skill-slot-6 { bottom: 7%; left: 29%; }
+.looking-skill-slot-7 { right: 29%; bottom: 7%; }
+.looking-skill-slot-8 { top: 84%; right: 15%; }
+.looking-skill-slot-9 { top: 69%; right: 8%; }
+.looking-skill-slot-10 { top: 52%; right: 3%; }
+.looking-skill-slot-11 { top: 36%; right: 7%; }
+.looking-skill-slot-12 { top: 22%; right: 3%; }
+.looking-skill-slot-13 { bottom: 18%; left: 24%; }
+.looking-skill-slot-14 { right: 24%; bottom: 18%; }
+
+@keyframes looking-jali-drift {
+  from { background-position: 0 0, 0 0, 34px 34px; }
+  to { background-position: 24px 14px, -18px 22px, 46px 28px; }
+}
+
+@keyframes looking-jali-shimmer {
+  0%, 12% { transform: translateX(-24%); opacity: 0; }
+  36%, 64% { opacity: 0.3; }
+  88%, 100% { transform: translateX(24%); opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .looking-header {
+    left: 50%;
+    width: calc(100% - 36px);
+    transform: translateX(-50%);
+  }
+
+  .looking-header p {
+    font-size: 18px;
+  }
+
+  .looking-header h2 {
+    max-width: 350px;
+    font-size: 18px;
+    line-height: 1.38;
+  }
+
+  .looking-skill {
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 7px;
+  }
+
+  .looking-skill-slot-1 { top: 26%; left: 1%; }
+  .looking-skill-slot-2 { top: 36%; left: 2%; }
+  .looking-skill-slot-3 { top: 47%; left: 1%; }
+  .looking-skill-slot-4 { top: 60%; left: 1%; }
+  .looking-skill-slot-5 { top: 73%; left: 2%; }
+  .looking-skill-slot-6 { bottom: 5%; left: 18%; }
+  .looking-skill-slot-7 { right: 18%; bottom: 5%; }
+  .looking-skill-slot-8 { top: 73%; right: 2%; }
+  .looking-skill-slot-9 { top: 60%; right: 1%; }
+  .looking-skill-slot-10 { top: 47%; right: 1%; }
+  .looking-skill-slot-11 { top: 36%; right: 2%; }
+  .looking-skill-slot-12 { top: 26%; right: 1%; }
+  .looking-skill-slot-13 { bottom: 15%; left: 3%; top: auto; }
+  .looking-skill-slot-14 { right: 3%; bottom: 15%; top: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .looking-header {
+    transform: none;
+  }
+
+  .looking-sticky::before,
+  .looking-sticky::after,
+  .looking-skill {
+    animation: none;
+  }
+}
+
+/* The bright jali now rests over the base mesh and breathes around cursor input. */
+.looking-section {
+  --jali-x: 0px;
+  --jali-y: 0px;
+}
+
+.looking-sticky::before {
+  will-change: transform;
+  animation: looking-jali-breathe-base 19s ease-in-out infinite;
+}
+
+.looking-sticky::after {
+  inset: -32px;
+  opacity: 0.17;
+  mask-image: none;
+  will-change: transform;
+  animation: looking-jali-breathe-overlay 16s ease-in-out infinite;
+}
+
+@keyframes looking-jali-breathe-base {
+  0%, 100% {
+    transform: translate(calc(var(--jali-x) - 4px), calc(var(--jali-y) - 3px)) scale(1.004);
+  }
+  50% {
+    transform: translate(calc(var(--jali-x) + 4px), calc(var(--jali-y) + 3px)) scale(1.009);
+  }
+}
+
+@keyframes looking-jali-breathe-overlay {
+  0%, 100% {
+    transform: translate(calc(var(--jali-x) - 12px), calc(var(--jali-y) - 8px)) scale(1.006);
+    opacity: 0.13;
+  }
+  48% {
+    transform: translate(calc(var(--jali-x) + 12px), calc(var(--jali-y) + 9px)) scale(1.014);
+    opacity: 0.23;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .looking-sticky::before,
+  .looking-sticky::after {
+    animation: none;
+    transform: none;
+  }
+}

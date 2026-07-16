@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
-import { Code2, Cpu, Lightbulb, Mic2, Palette, Search, UserRound, Video } from "lucide-react"
+import { Check, Code2, Cpu, Lightbulb, Mic2, Palette, Search, Video, X } from "lucide-react"
 import { BrandMark } from "./BrandMark"
+import { useJaliSway } from "../hooks/useJaliSway"
 
 type CollisionPhase = "idle" | "searching" | "matched" | "building"
 type Decision = "accepted" | "rejected"
@@ -8,6 +9,7 @@ type Decision = "accepted" | "rejected"
 const profiles = [
   {
     className: "collision-reject-one",
+    portrait: "/assets/generated/profile-research.webp",
     role: "Research",
     detail: "Research · Data",
     goal: "Sustainability",
@@ -18,6 +20,7 @@ const profiles = [
   },
   {
     className: "collision-slot-one",
+    portrait: "/assets/generated/profile-agrima.webp",
     name: "Agrima",
     role: "Developer",
     detail: "React · AI/ML",
@@ -29,6 +32,7 @@ const profiles = [
   },
   {
     className: "collision-reject-two",
+    portrait: "/assets/generated/profile-video.webp",
     role: "Video",
     detail: "Video · Content",
     goal: "Consumer apps",
@@ -39,6 +43,7 @@ const profiles = [
   },
   {
     className: "collision-slot-two",
+    portrait: "/assets/generated/profile-ria.webp",
     name: "Ria",
     role: "Designer",
     detail: "UI/UX · Research",
@@ -50,6 +55,7 @@ const profiles = [
   },
   {
     className: "collision-reject-three",
+    portrait: "/assets/generated/profile-hardware.webp",
     role: "Hardware",
     detail: "Hardware · AI/ML",
     goal: "Hackathons",
@@ -60,6 +66,7 @@ const profiles = [
   },
   {
     className: "collision-slot-three",
+    portrait: "/assets/generated/profile-shreshth.webp",
     name: "Shreshth",
     role: "Product thinker",
     detail: "Product · Data",
@@ -71,6 +78,7 @@ const profiles = [
   },
   {
     className: "collision-slot-four",
+    portrait: "/assets/generated/profile-yash.webp",
     name: "Yash",
     role: "Presenter",
     detail: "Pitching · Content",
@@ -87,6 +95,9 @@ const phases: Exclude<CollisionPhase, "idle">[] = ["searching", "matched", "buil
 export function CollisionSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [phase, setPhase] = useState<CollisionPhase>("idle")
+  const [activeProfile, setActiveProfile] = useState(0)
+  const [pressedDecision, setPressedDecision] = useState<Decision | null>(null)
+  useJaliSway(sectionRef)
 
   useEffect(() => {
     const section = sectionRef.current
@@ -103,6 +114,12 @@ export function CollisionSection() {
         if (!entry.isIntersecting) return
 
         setPhase("searching")
+        profiles.forEach((profile, index) => {
+          const start = index * 820
+          timers.push(window.setTimeout(() => setActiveProfile(index), start))
+          timers.push(window.setTimeout(() => setPressedDecision(profile.decision), start + 390))
+          timers.push(window.setTimeout(() => setPressedDecision(null), start + 790))
+        })
         timers.push(window.setTimeout(() => setPhase("matched"), 5900))
         timers.push(window.setTimeout(() => setPhase("building"), 6800))
         observer.disconnect()
@@ -138,7 +155,6 @@ export function CollisionSection() {
 
       <div className="collision-stage" aria-label="Seven profiles are reviewed and four MUJ builders form a team">
         <svg className="collision-network" viewBox="0 0 900 700" aria-hidden="true">
-          <ellipse cx="450" cy="350" rx="346" ry="245" />
           <path pathLength="1" d="M146 150C258 220 352 284 450 350" />
           <path pathLength="1" d="M754 150C642 220 548 284 450 350" />
           <path pathLength="1" d="M146 550C258 486 352 416 450 350" />
@@ -151,7 +167,7 @@ export function CollisionSection() {
           <strong>PairUp</strong>
         </div>
 
-        {profiles.map(({ className, name, role, detail, goal, status, university, decision, icon: Icon }, index) => (
+        {profiles.map(({ className, portrait, name, role, detail, goal, status, university, decision, icon: Icon }, index) => (
           <article
             className={"collision-card " + className + " is-" + decision}
             aria-hidden={phase === "building" && decision === "rejected"}
@@ -163,8 +179,8 @@ export function CollisionSection() {
               <span>PROFILE {String(index + 1).padStart(2, "0")}</span>
             </header>
 
-            <div className="collision-profile-photo" aria-label="Profile photo placeholder">
-              <UserRound />
+            <div className="collision-profile-photo" aria-label="Profile portrait">
+              <img src={portrait} alt="" loading="lazy" decoding="async" />
               <span className="collision-photo-role"><Icon /></span>
             </div>
 
@@ -193,6 +209,28 @@ export function CollisionSection() {
             </div>
           </article>
         ))}
+
+        <div
+          className="collision-controls"
+          aria-label={"Profile decision controls for " + (profiles[activeProfile].name ?? profiles[activeProfile].role)}
+        >
+          <button
+            className={"collision-control collision-control-reject" + (pressedDecision === "rejected" ? " is-pressed" : "")}
+            type="button"
+            tabIndex={-1}
+            aria-label="Reject profile"
+          >
+            <X />
+          </button>
+          <button
+            className={"collision-control collision-control-accept" + (pressedDecision === "accepted" ? " is-pressed" : "")}
+            type="button"
+            tabIndex={-1}
+            aria-label="Accept profile"
+          >
+            <Check />
+          </button>
+        </div>
       </div>
     </section>
   )

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" fill="none">
+  <g id="terrain-front">
+    <!-- Main ink foreground wave -->
+    <path d="M-80 950 L-80 820 C 200 780, 400 890, 680 850 C 720 840, 750 825, 800 825 C 850 825, 880 840, 920 850 C 1200 890, 1400 780, 1680 820 L 1680 950 Z" fill="#070912" />
+    
+    <!-- Bone carved inset surface -->
+    <path d="M 120 870 C 300 820, 500 880, 680 850 C 700 845, 750 830, 800 830 C 850 830, 900 845, 920 850 C 1100 880, 1300 820, 1480 870" stroke="#F7F7FB" stroke-width="2.5" stroke-opacity="0.4" />
+    
+    <!-- Coral landing shape beneath the figure (x=720-880, y=825-850) -->
+    <path d="M 700 835 C 730 828, 770 820, 800 820 C 830 820, 870 828, 900 835 C 870 842, 830 848, 800 848 C 770 848, 730 842, 700 835 Z" fill="#FF6B6B" fill-opacity="0.9" />
+  </g>
+</svg>

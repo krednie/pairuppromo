@@ -1,6 +1,7 @@
 export type MomentumMetric = {
-  id: "builders" | "ideas" | "universities" | "teams"
+  id: "builders"
   value: number
+  suffix: string
   label: string
 }
 
@@ -15,24 +16,19 @@ export type MomentumConfig = {
   metrics: readonly MomentumMetric[]
   activities: readonly MomentumActivity[]
   skills: readonly string[]
-  universitySignals: readonly string[]
 }
 
 export const momentumConfig: MomentumConfig = {
-  isDemo: true,
+  isDemo: false,
   metrics: [
-    { id: "builders", value: 248, label: "early builders" },
-    { id: "ideas", value: 37, label: "active ideas" },
-    { id: "universities", value: 12, label: "universities represented" },
-    { id: "teams", value: 68, label: "teams forming" },
+    { id: "builders", value: 100, suffix: "+", label: "early builders on the list" },
   ],
   activities: [
-    { id: "designer-jaipur", message: "A designer joined from Jaipur.", signal: "DS" },
-    { id: "ai-team", message: "Three AI builders are looking for a fourth teammate.", signal: "AI" },
-    { id: "sustainability", message: "A product idea in sustainability is looking for a developer.", signal: "SU" },
-    { id: "pixelpilot", message: "Someone reserved the username 'pixelpilot.'", signal: "PP" },
-    { id: "new-builders", message: "Five new builders joined today.", signal: "+5" },
+    { id: "priority-queue", message: "Early members enter the priority matching queue.", signal: "01" },
+    { id: "founding-badge", message: "The first 250 members choose an exclusive Founding Member badge and receive support + perks.", signal: "02" },
+    { id: "university-circle", message: "Get to know cool people at your university.", signal: "03" },
+    { id: "startup-circle", message: "Find your dream startup circle.", signal: "04" },
+    { id: "built-by-us", message: "Built by us. For us.", signal: "05" },
   ],
   skills: ["React", "UI/UX", "AI/ML", "Pitching", "Product", "Research", "Video", "Hardware"],
-  universitySignals: ["MUJ", "JAIPUR", "12 UNIVERSITIES"],
 }

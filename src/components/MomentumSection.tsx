@@ -79,14 +79,13 @@ export function MomentumSection() {
       aria-labelledby="momentum-title"
     >
       <header className="momentum-heading">
-        <span>DEMO ACTIVITY</span>
         <h2 id="momentum-title">Something is already forming.</h2>
       </header>
 
-      <div className="momentum-metrics" aria-label="Demo PairUp momentum">
+      <div className="momentum-metrics" aria-label="PairUp pre-launch momentum">
         {momentumConfig.metrics.map((metric) => (
           <div className="momentum-metric" key={metric.id}>
-            <strong>{counts[metric.id]}</strong>
+            <strong>{counts[metric.id]}{metric.suffix}</strong>
             <span>{metric.label}</span>
           </div>
         ))}
@@ -113,16 +112,15 @@ export function MomentumSection() {
             <path pathLength="1" d="M70 242C198 86 324 264 590 82" />
             <path pathLength="1" d="M64 88C217 196 408 52 602 234" />
           </svg>
-          {momentumConfig.universitySignals.map((signal, index) => (
-            <span className={"momentum-signal momentum-signal-" + (index + 1)} key={signal}>
+          {[0, 1, 2].map((index) => (
+            <span className={"momentum-signal momentum-signal-" + (index + 1)} key={index}>
               <i />
-              {signal}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="momentum-skills" aria-label="Skills appearing in the PairUp demo">
+      <div className="momentum-skills" aria-label="Skills PairUp will support at launch">
         <div className="momentum-skills-track">
           {[...momentumConfig.skills, ...momentumConfig.skills].map((skill, index) => (
             <span aria-hidden={index >= momentumConfig.skills.length} key={skill + index}>{skill}</span>

@@ -1,40 +1,4 @@
-import { Code2, Lightbulb, Mic2, Palette } from "lucide-react"
-import { BrandMark } from "./BrandMark"
-
-const roles = [
-  {
-    className: "team-node-developer",
-    role: "Developer",
-    detail: "React · Python",
-    icon: Code2,
-    startX: -360,
-    startY: -170,
-  },
-  {
-    className: "team-node-designer",
-    role: "UI / UX",
-    detail: "Figma · Research",
-    icon: Palette,
-    startX: 370,
-    startY: -190,
-  },
-  {
-    className: "team-node-product",
-    role: "Product",
-    detail: "Ideas · Strategy",
-    icon: Lightbulb,
-    startX: -390,
-    startY: 190,
-  },
-  {
-    className: "team-node-presenter",
-    role: "Presenter",
-    detail: "Pitching · Story",
-    icon: Mic2,
-    startX: 390,
-    startY: 180,
-  },
-]
+import { ConstellationField } from "./ConstellationField"
 
 export function TeamFormation() {
   return (
@@ -50,46 +14,8 @@ export function TeamFormation() {
           </p>
         </div>
 
-        <div className="formation-stage" aria-label="Four complementary roles forming a team">
-          <svg
-            className="formation-connections"
-            viewBox="0 0 700 700"
-            preserveAspectRatio="xMidYMid meet"
-            aria-hidden="true"
-          >
-            <circle cx="350" cy="350" r="226" />
-            <circle className="formation-orbit-dashed" cx="350" cy="350" r="158" />
-            <path className="team-connection" pathLength="1" d="M350 350C290 300 250 246 194 198" />
-            <path className="team-connection" pathLength="1" d="M350 350C416 298 450 245 506 190" />
-            <path className="team-connection" pathLength="1" d="M350 350C292 411 244 458 185 512" />
-            <path className="team-connection" pathLength="1" d="M350 350C411 412 460 456 520 506" />
-            <path className="connection-pulse" pathLength="1" d="M194 198C294 284 411 412 520 506" />
-          </svg>
-
-          <div className="formation-core">
-            <BrandMark className="formation-mark" />
-            <span>TEAM READY</span>
-          </div>
-
-          {roles.map(({ className, role, detail, icon: Icon, startX, startY }) => (
-            <div
-              className={"team-node " + className}
-              data-start-x={startX}
-              data-start-y={startY}
-              key={role}
-            >
-              <span className="team-node-icon"><Icon size={18} /></span>
-              <span className="team-node-copy">
-                <strong>{role}</strong>
-                <small>{detail}</small>
-              </span>
-            </div>
-          ))}
-
-          <div className="formation-result" aria-hidden="true">
-            <span>COMPLEMENTARY SKILLS</span>
-            <strong>4 / 4</strong>
-          </div>
+        <div className="formation-stage formation-constellation-stage">
+          <ConstellationField />
         </div>
       </div>
     </section>

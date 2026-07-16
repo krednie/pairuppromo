@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" width="100%" height="100%" fill="none">
+  <g id="wave-transition">
+    <!-- Mid wave: Offset Ink Silhouette (#070912) -->
+    <path d="M-50 220 C 300 160, 500 280, 800 200 C 1100 120, 1300 240, 1650 160 L 1650 450 L -50 450 Z" fill="#070912" opacity="0.5" />
+    
+    <!-- Top wave: Clean Bone-Colored Topographic Edge (#F7F7FB) -->
+    <path d="M-50 180 C 300 120, 500 240, 800 160 C 1100 80, 1300 200, 1650 120 L 1650 450 L -50 450 Z" fill="#F7F7FB" />
+    
+    <!-- Base wave: Deep Ink Field (#070912) -->
+    <path d="M-50 260 C 300 200, 500 320, 800 240 C 1100 160, 1300 280, 1650 200 L 1650 450 L -50 450 Z" fill="#070912" />
+  </g>
+</svg>

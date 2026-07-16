@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useJaliSway } from "../../hooks/useJaliSway"
 
 const voices = [
   {
@@ -33,6 +34,8 @@ const voices = [
   },
 ]
 
+const allSkills = Array.from(new Set(voices.flatMap((voice) => voice.skills)))
+
 function voicePosition(index: number, activeIndex: number) {
   if (index === activeIndex) return " is-active"
   if (index === (activeIndex + 1) % voices.length) return " is-next"
@@ -41,6 +44,8 @@ function voicePosition(index: number, activeIndex: number) {
 }
 
 export function EveryoneLookingSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  useJaliSway(sectionRef)
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
@@ -52,7 +57,7 @@ export function EveryoneLookingSection() {
   }, [])
 
   return (
-    <section id="signals" className="looking-section" aria-labelledby="looking-title">
+    <section ref={sectionRef} id="signals" className="looking-section" aria-labelledby="looking-title">
       <div className="looking-sticky">
         <header className="looking-header">
           <p>Everyone is looking for someone</p>
@@ -65,11 +70,14 @@ export function EveryoneLookingSection() {
             <path className="looking-link looking-link-developer" pathLength="1" d="M700 444C865 319 1030 278 1265 325" />
             <path className="looking-link looking-link-designer" pathLength="1" d="M918 615C1078 557 1170 490 1301 438" />
           </svg>
-          <div className="looking-skill-set" key={activeIndex}>
-            {voices[activeIndex].skills.map((skill, index) => (
+          <div className="looking-skill-set">
+            {allSkills.map((skill, index) => (
               <span
-                className={"looking-skill looking-skill-slot-" + (index + 1)}
-                style={{ animationDelay: String(index * 0.09) + "s" }}
+                className={
+                  "looking-skill looking-skill-slot-" +
+                  (index + 1) +
+                  (voices[activeIndex].skills.includes(skill) ? " is-linked" : " is-distant")
+                }
                 key={skill}
               >
                 {skill}
