@@ -108,6 +108,12 @@
   width: 100%;
   height: 100%;
   overflow: visible;
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    opacity 620ms ease,
+    transform 820ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .collision-network ellipse,
@@ -138,15 +144,15 @@
 }
 
 .is-matched .collision-network ellipse,
-.is-matched .collision-network path,
-.is-building .collision-network ellipse,
-.is-building .collision-network path {
+.is-matched .collision-network path {
   opacity: 1;
   stroke-dashoffset: 0;
 }
 
-.is-building .collision-network .collision-pulse {
-  animation: collision-pulse 1.2s ease-out 1;
+.is-building .collision-network {
+  opacity: 0;
+  transform: scale(0.72);
+  pointer-events: none;
 }
 
 .collision-core {
@@ -206,6 +212,7 @@
 
 .collision-card {
   --final-scale: 0.52;
+  --build-scale: 0.44;
   position: absolute;
   z-index: 9;
   top: 50%;
@@ -231,21 +238,29 @@
 .collision-slot-one {
   --target-x: -325px;
   --target-y: -205px;
+  --build-x: -123px;
+  --build-y: -156px;
 }
 
 .collision-slot-two {
   --target-x: 325px;
   --target-y: -205px;
+  --build-x: 123px;
+  --build-y: -156px;
 }
 
 .collision-slot-three {
   --target-x: -325px;
   --target-y: 205px;
+  --build-x: -123px;
+  --build-y: 156px;
 }
 
 .collision-slot-four {
   --target-x: 325px;
   --target-y: 205px;
+  --build-x: 123px;
+  --build-y: 156px;
 }
 
 .is-searching .collision-card.is-accepted {
@@ -256,13 +271,21 @@
   animation: collision-profile-reject 0.82s cubic-bezier(0.24, 0.76, 0.25, 1) var(--swipe-delay) both;
 }
 
-.is-matched .collision-card.is-accepted,
-.is-building .collision-card.is-accepted {
+.is-matched .collision-card.is-accepted {
   opacity: 1;
   transform: translate(
     calc(-50% + var(--target-x)),
     calc(-50% + var(--target-y))
   ) scale(var(--final-scale));
+}
+
+.is-building .collision-card.is-accepted {
+  z-index: 9;
+  opacity: 1;
+  transform: translate(
+    calc(-50% + var(--build-x)),
+    calc(-50% + var(--build-y))
+  ) scale(var(--build-scale));
 }
 
 .is-matched .collision-card.is-rejected,
@@ -640,12 +663,42 @@
     --target-y: 225px;
   }
 
-  .is-matched .collision-card.is-accepted,
-  .is-building .collision-card.is-accepted {
+  .collision-card {
+    --build-scale: 0.37;
+  }
+
+  .collision-slot-one {
+    --build-x: -104px;
+    --build-y: -131.5px;
+  }
+
+  .collision-slot-two {
+    --build-x: 104px;
+    --build-y: -131.5px;
+  }
+
+  .collision-slot-three {
+    --build-x: -104px;
+    --build-y: 131.5px;
+  }
+
+  .collision-slot-four {
+    --build-x: 104px;
+    --build-y: 131.5px;
+  }
+
+  .is-matched .collision-card.is-accepted {
     transform: translate(
       calc(-50% + var(--target-x)),
       calc(-50% + var(--target-y))
     ) scale(var(--final-scale));
+  }
+
+  .is-building .collision-card.is-accepted {
+    transform: translate(
+      calc(-50% + var(--build-x)),
+      calc(-50% + var(--build-y))
+    ) scale(var(--build-scale));
   }
 
   .collision-core {
@@ -823,10 +876,43 @@
   object-position: center 24%;
 }
 
+@media (max-width: 800px) {
+  .collision-core {
+    width: 112px;
+    height: 112px;
+  }
+}
+
 @media (max-width: 540px) {
+  .collision-core {
+    width: 112px;
+    height: 112px;
+  }
+
   .collision-card {
+    --build-scale: 0.38;
     width: min(310px, 80vw);
     min-height: 470px;
+  }
+
+  .collision-slot-one {
+    --build-x: calc(-39.2px - min(58.9px, 15.2vw));
+    --build-y: -128.5px;
+  }
+
+  .collision-slot-two {
+    --build-x: calc(39.2px + min(58.9px, 15.2vw));
+    --build-y: -128.5px;
+  }
+
+  .collision-slot-three {
+    --build-x: calc(-39.2px - min(58.9px, 15.2vw));
+    --build-y: 128.5px;
+  }
+
+  .collision-slot-four {
+    --build-x: calc(39.2px + min(58.9px, 15.2vw));
+    --build-y: 128.5px;
   }
 
   .collision-profile-photo {

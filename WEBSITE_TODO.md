@@ -2,6 +2,12 @@
 
 ## Current Implementation Pass
 
+- [x] Replace the cluttered hero fly-ins with one ordered blur-and-opacity reveal.
+- [x] Keep the hero terrain and builder stable from the first rendered frame.
+- [x] Return the constellation field to one team at a time while preserving the faster cycle.
+- [x] Fade and contract the collision network after the four profiles are accepted.
+- [x] Move the final four profiles into a close orbit around the PairUp logo.
+- [x] Keep each final profile overlap with the logo core between 10% and 15% on mobile, tablet, and desktop.
 - [x] Give all seven swipe profiles real names.
 - [x] Increase the accepted and rejected card edge glows without changing swipe direction.
 - [x] Run two non-overlapping constellation teams at once and shorten the formation cycle by about 40%.
@@ -665,6 +671,9 @@ By the signup, the visitor should feel:
 - [ ] The page made me feel the promise instead of merely explaining it.
 
 # Final QA
+
+- [x] Enlarge and tighten the final four-profile orbit on desktop and mobile, with about 15% overlap against the PairUp core.
+- [x] Expand pre-launch proof into three honest signals, including a hand-drawn coral underline for "ziddis."
 
 ## Visual
 

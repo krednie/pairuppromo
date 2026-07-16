@@ -1,9 +1,17 @@
-export type MomentumMetric = {
-  id: "builders"
-  value: number
-  suffix: string
-  label: string
-}
+export type MomentumMetric =
+  | {
+      id: "builders" | "community"
+      kind: "count"
+      value: number
+      suffix: string
+      label: string
+    }
+  | {
+      id: "ziddis"
+      kind: "statement"
+      lead: string
+      accent: string
+    }
 
 export type MomentumActivity = {
   id: string
@@ -21,7 +29,9 @@ export type MomentumConfig = {
 export const momentumConfig: MomentumConfig = {
   isDemo: false,
   metrics: [
-    { id: "builders", value: 100, suffix: "+", label: "early builders on the list" },
+    { id: "builders", kind: "count", value: 100, suffix: "+", label: "early builders on the list" },
+    { id: "community", kind: "count", value: 1, suffix: "", label: "community of people who defy normal" },
+    { id: "ziddis", kind: "statement", lead: "For the", accent: "ziddis" },
   ],
   activities: [
     { id: "priority-queue", message: "Early members enter the priority matching queue.", signal: "01" },

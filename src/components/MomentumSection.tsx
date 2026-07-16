@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { momentumConfig } from "../config/momentum"
+import { momentumConfig, type MomentumMetric } from "../config/momentum"
 
 function activityPosition(index: number, activeIndex: number) {
   const distance = (index - activeIndex + momentumConfig.activities.length) % momentumConfig.activities.length
@@ -10,9 +10,13 @@ function activityPosition(index: number, activeIndex: number) {
   return " is-away"
 }
 
+const countMetrics = momentumConfig.metrics.filter(
+  (metric): metric is Extract<MomentumMetric, { kind: "count" }> => metric.kind === "count",
+)
+
 const emptyCounts = Object.fromEntries(
-  momentumConfig.metrics.map((metric) => [metric.id, 0]),
-) as Record<(typeof momentumConfig.metrics)[number]["id"], number>
+  countMetrics.map((metric) => [metric.id, 0]),
+) as Record<Extract<MomentumMetric, { kind: "count" }>["id"], number>
 
 export function MomentumSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -33,7 +37,7 @@ export function MomentumSection() {
 
       if (reducedMotion) {
         setCounts(Object.fromEntries(
-          momentumConfig.metrics.map((metric) => [metric.id, metric.value]),
+          countMetrics.map((metric) => [metric.id, metric.value]),
         ) as typeof emptyCounts)
         return
       }
@@ -43,7 +47,7 @@ export function MomentumSection() {
         const progress = Math.min((time - startTime) / 1400, 1)
         const eased = 1 - Math.pow(1 - progress, 3)
         setCounts(Object.fromEntries(
-          momentumConfig.metrics.map((metric) => [metric.id, Math.round(metric.value * eased)]),
+          countMetrics.map((metric) => [metric.id, Math.round(metric.value * eased)]),
         ) as typeof emptyCounts)
         if (progress < 1) frame = window.requestAnimationFrame(tick)
       }
@@ -83,12 +87,31 @@ export function MomentumSection() {
       </header>
 
       <div className="momentum-metrics" aria-label="PairUp pre-launch momentum">
-        {momentumConfig.metrics.map((metric) => (
-          <div className="momentum-metric" key={metric.id}>
-            <strong>{counts[metric.id]}{metric.suffix}</strong>
-            <span>{metric.label}</span>
-          </div>
-        ))}
+        {momentumConfig.metrics.map((metric) => {
+          if (metric.kind === "statement") {
+            return (
+              <div className="momentum-metric momentum-metric-statement" key={metric.id}>
+                <strong>
+                  {metric.lead}{" "}
+                  <em className="momentum-ziddis">
+                    {metric.accent}
+                    <svg viewBox="0 0 150 22" aria-hidden="true">
+                      <path d="M4 11C32 2 65 3 91 10C112 15 132 14 146 7" />
+                      <path d="M17 18C49 10 88 10 136 15" />
+                    </svg>
+                  </em>
+                </strong>
+              </div>
+            )
+          }
+
+          return (
+            <div className="momentum-metric" key={metric.id}>
+              <strong>{counts[metric.id]}{metric.suffix}</strong>
+              <span>{metric.label}</span>
+            </div>
+          )
+        })}
       </div>
 
       <div className="momentum-scene">

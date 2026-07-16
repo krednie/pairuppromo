@@ -51,16 +51,18 @@ export default function App() {
 
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } })
       intro
-        .from(".empty-space-brand", { y: -10, opacity: 0, duration: 0.72 })
-        .from(".empty-space-secondary", { y: -8, opacity: 0, duration: 0.72 }, 0.12)
-        .from(".empty-space-title-line > span", { yPercent: 0, opacity: 0, filter: "blur(18px)", duration: 1.15, stagger: 0.14 }, 0.3)
-        .from(".empty-space-opening", { y: 10, opacity: 0, filter: "blur(6px)", duration: 0.75 }, 0.78)
-        .from(".empty-space-magnetic-zone", { y: 11, opacity: 0, duration: 0.62 }, 0.88)
-        .from(".majestic-terrain-rear", { y: 60, opacity: 0, duration: 1.35 }, 0.2)
-        .from(".majestic-terrain-mid", { y: 72, opacity: 0, duration: 1.4 }, 0.35)
-        .from(".majestic-terrain-front", { y: 54, opacity: 0, duration: 1.25 }, 0.52)
-        .from(".majestic-builder", { y: 26, opacity: 0, duration: 1.05 }, 0.92)
-        .from(".empty-space-scroll", { opacity: 0, y: -8, duration: 0.55 }, 1.62)
+        .from(".empty-space-brand", { opacity: 0, filter: "blur(10px)", duration: 0.6 })
+        .from(".empty-space-title-line > span", {
+          yPercent: 0,
+          opacity: 0,
+          filter: "blur(18px)",
+          duration: 1.05,
+          stagger: 0.12,
+        }, 0.18)
+        .from(".empty-space-opening", { opacity: 0, filter: "blur(6px)", duration: 0.62 }, 0.72)
+        .from(".empty-space-magnetic-zone", { opacity: 0, filter: "blur(5px)", duration: 0.58 }, 0.88)
+        .from(".empty-space-secondary", { opacity: 0, duration: 0.52 }, 1.12)
+        .from(".empty-space-scroll", { opacity: 0, duration: 0.48 }, 1.28)
 
       gsap.to(".empty-space-content", {
         yPercent: 9,

@@ -55,17 +55,17 @@ function seededNoise(index: number) {
   return value - Math.floor(value)
 }
 
-function mapPatternPoint(point: Point, width: number, height: number, lane: number): Point {
+function mapPatternPoint(point: Point, width: number, height: number): Point {
   if (width >= 820) {
     return {
       x: width * (0.52 + point.x * 0.43),
-      y: height * ((lane === 0 ? 0.08 : 0.54) + point.y * 0.36),
+      y: height * (0.11 + point.y * 0.76),
     }
   }
 
   return {
-    x: width * ((lane === 0 ? 0.06 : 0.54) + point.x * 0.4),
-    y: height * (0.52 + point.y * 0.43),
+    x: width * (0.08 + point.x * 0.84),
+    y: height * (0.52 + point.y * 0.42),
   }
 }
 
@@ -126,9 +126,8 @@ function drawConstellation(
   height: number,
   lifecycle: number,
   patternIndex: number,
-  lane: number,
 ) {
-  const points = pattern.map((point) => mapPatternPoint(point, width, height, lane))
+  const points = pattern.map((point) => mapPatternPoint(point, width, height))
   const segments = points.slice(0, -1).map((point, index) => [point, points[index + 1]] as const)
   if (points.length > 3) segments.push([points[points.length - 1], points[0]])
 
@@ -279,20 +278,16 @@ export function ConstellationField() {
 
       if (entered) {
         if (reducedMotion) {
-          drawConstellation(context, constellationPatterns[2], width, height, 0.62, 2, 0)
-          drawConstellation(context, constellationPatterns[4], width, height, 0.62, 4, 1)
+          drawConstellation(context, constellationPatterns[2], width, height, 0.62, 2)
         } else {
           const elapsed = Math.max(time - startTime, 0)
           const cycleDuration = 3500
           const activeDuration = 3050
+          const cycleIndex = Math.floor(elapsed / cycleDuration)
+          const localTime = elapsed % cycleDuration
 
-          for (let lane = 0; lane < 2; lane += 1) {
-            const laneElapsed = Math.max(elapsed - lane * 420, 0)
-            const cycleIndex = Math.floor(laneElapsed / cycleDuration)
-            const localTime = laneElapsed % cycleDuration
-            if (localTime >= activeDuration) continue
-
-            const patternIndex = (cycleIndex * 2 + lane) % constellationPatterns.length
+          if (localTime < activeDuration) {
+            const patternIndex = cycleIndex % constellationPatterns.length
             drawConstellation(
               context,
               constellationPatterns[patternIndex],
@@ -300,7 +295,6 @@ export function ConstellationField() {
               height,
               localTime / activeDuration,
               patternIndex,
-              lane,
             )
           }
         }
