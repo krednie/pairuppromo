@@ -295,9 +295,17 @@
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding-left: 9px;
+  gap: 0;
   animation: momentum-skills 24s linear infinite;
+}
+
+.momentum-skills-group {
+  height: 100%;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 9px;
+  padding-right: 9px;
 }
 
 .momentum-skills-track span {

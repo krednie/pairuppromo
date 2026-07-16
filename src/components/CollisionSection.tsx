@@ -10,6 +10,7 @@ const profiles = [
   {
     className: "collision-reject-one",
     portrait: "/assets/generated/profile-research.webp",
+    name: "Naina",
     role: "Research",
     detail: "Research · Data",
     goal: "Sustainability",
@@ -33,6 +34,7 @@ const profiles = [
   {
     className: "collision-reject-two",
     portrait: "/assets/generated/profile-video.webp",
+    name: "Kabir",
     role: "Video",
     detail: "Video · Content",
     goal: "Consumer apps",
@@ -56,6 +58,7 @@ const profiles = [
   {
     className: "collision-reject-three",
     portrait: "/assets/generated/profile-hardware.webp",
+    name: "Ishaan",
     role: "Hardware",
     detail: "Hardware · AI/ML",
     goal: "Hackathons",

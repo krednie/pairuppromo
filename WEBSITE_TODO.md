@@ -1,5 +1,20 @@
 # PairUp Website Todo
 
+## Current Implementation Pass
+
+- [x] Give all seven swipe profiles real names.
+- [x] Increase the accepted and rejected card edge glows without changing swipe direction.
+- [x] Run two non-overlapping constellation teams at once and shorten the formation cycle by about 40%.
+- [x] Keep the Chapter 4 skill pills looping continuously after Hardware.
+- [x] Change the university activity line from cool people to amazing people.
+- [x] Add a Vercel signup function that stores name and phone only.
+- [x] Add normalized-phone duplicate handling and the Neon database schema.
+- [x] Verify production build, desktop/mobile overflow, canvas activity, and marquee continuity.
+- [x] Remove rejected generated SVGs, duplicate portrait sources, caches, and temporary test output.
+- [ ] Reattach the requested Agrima portrait and identify its current owner before swapping.
+- [ ] Connect Neon to the hosted Vercel project, run the schema, and verify a live database write.
+- [ ] Choose the Founding Member badge collection before implementing the selector.
+
 This checklist follows `websitedesign.md` in the same story order. It is the implementation source of truth.
 
 ## Working Rules
@@ -8,13 +23,13 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Provide a live URL for review.
 - [x] Do not provide screenshots.
 - [x] Ask before adding or rewriting visible marketing copy.
-- [x] Preserve the approved swipe card while adding the approved name field.
-- [x] Keep signup to name plus one phone contact field.
+- [x] Preserve the approved phone-number swipe card.
+- [x] Keep signup to one phone or email field.
 - [x] Do not ask role, year, programme, skills, goals, or referral questions on the landing page.
 - [x] Keep the shared 28px radius for framed surfaces.
 - [x] Keep PairUp as the product name.
-- [x] Mark a chapter complete only after browser, interaction, mobile, and reduced-motion checks.
-- [x] Do not start the next chapter until the current chapter is reviewed.
+- [ ] Mark a chapter complete only after browser, interaction, mobile, and reduced-motion checks.
+- [ ] Do not start the next chapter until the current chapter is reviewed.
 
 ## User Overrides To Preserve
 
@@ -44,128 +59,109 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 
 ## Content
 
-- [x] Open on a dark, spacious screen with very little visible.
-- [x] Show PairUp prominently above the headline at 70% of the hero headline size.
-- [x] Show only one fully opaque, 20%-larger supporting line under the headline: "Great ideas deserve the right team."
-- [x] After a short pause, show: "Build better. Together."
-- [x] Remove the duplicate "the greatest ideas deserve the best team." line.
-- [x] Primary CTA: "Find your Dream Team".
-- [x] Keep the early-member line as plain text: top-left on desktop and centered on mobile.
-- [x] Keep the first viewport focused enough to create anticipation.
-- [x] Ensure the first viewport still answers what PairUp is, who it is for, why it matters, and what to do next.
+- [ ] Open on a dark, spacious screen with very little visible.
+- [ ] Show PairUp subtly above or beside the headline.
+- [ ] Show: "Great ideas deserve the right team."
+- [ ] After a short pause, show: "Build better. Together."
+- [ ] Show: "the greatest ideas deserve the best team."
+- [ ] Primary CTA: "Join the founding circle."
+- [ ] Secondary line: "Early members get a permanent Founding Builder badge, referral perks, and priority access."
+- [ ] Keep the first viewport focused enough to create anticipation.
+- [ ] Ensure the first viewport still answers what PairUp is, who it is for, why it matters, and what to do next.
 
 ## Reference-Image Art Direction
 
-- [x] Match the supplied majestic blue editorial reference image.
-- [x] Use a full-bleed deep cobalt and ink night environment.
-- [x] Place sculptural black and bone topographic forms along the lower scene.
-- [x] Use tactile paper grain and printed texture.
-- [x] Use a lone human builder silhouette as the initial scale cue, centered on mobile with separation from the black terrain.
-- [x] Remove the mobile head outline and lift the complete figure and shadow above the black terrain.
-- [x] Use sparse stars and signal points in the sky.
-- [x] Keep the scene cinematic, quiet, and slightly mysterious.
-- [x] Make the scene feel local through restrained Jaipur/Rajasthan geometry and material.
-- [x] Explore subtle jali linework, an abstract arid horizon, and sandstone/coral accents.
-- [x] Avoid monuments, tourist collages, fest-poster styling, and generic campus stock imagery.
-- [x] Keep hero art full-bleed and unframed.
-- [x] Keep all copy clear of the artwork and pull the mobile content stack lower.
-- [x] Leave a visible hint of Chapter 2 in every desktop and mobile first viewport.
+- [ ] Match the supplied majestic blue editorial reference image.
+- [ ] Use a full-bleed deep cobalt and ink night environment.
+- [ ] Place sculptural black and bone topographic forms along the lower scene.
+- [ ] Use tactile paper grain and printed texture.
+- [ ] Use a lone human builder silhouette as the initial scale cue.
+- [ ] Use sparse stars and signal points in the sky.
+- [ ] Keep the scene cinematic, quiet, and slightly mysterious.
+- [ ] Make the scene feel local through restrained Jaipur/Rajasthan geometry and material.
+- [ ] Explore subtle jali linework, an abstract arid horizon, and sandstone/coral accents.
+- [ ] Avoid monuments, tourist collages, fest-poster styling, and generic campus stock imagery.
+- [ ] Keep hero art full-bleed and unframed.
+- [ ] Keep all copy clear of the artwork.
+- [ ] Leave a visible hint of Chapter 2 in every desktop and mobile first viewport.
 
 ## Motion
 
-- [x] Reveal headline letters with slight blur that sharpens into focus.
-- [x] Reveal both hero headline lines from blur only, with no vertical slide or clipped underline entrance.
-- [x] Let background dots drift independently.
-- [x] Attract some dots subtly toward the pointer.
-- [x] Give the primary CTA a firm magnetic response that follows the pointer on hover.
-- [x] Keep entrance motion slow and restrained.
-- [x] Provide a complete reduced-motion composition.
-- [x] Keep the CTA usable before decorative motion finishes.
-
-- [x] Make the right-side next control roughly 40% larger, more opaque, and route it to Chapter 2.
+- [ ] Reveal headline letters with slight blur that sharpens into focus.
+- [ ] Let background dots drift independently.
+- [ ] Attract some dots subtly toward the pointer.
+- [ ] Give the primary CTA a soft magnetic hover response.
+- [ ] Keep entrance motion slow and restrained.
+- [ ] Provide a complete reduced-motion composition.
+- [ ] Keep the CTA usable before decorative motion finishes.
 
 ## Minimal Top Bar
 
-- [x] Do not build a traditional navbar.
-- [x] Use a minimal floating top bar containing PairUp and "Join early."
-- [x] Allow the top bar to become visible after the hero.
-- [x] Route "Join early" directly to the approved signup card.
+- [ ] Do not build a traditional navbar.
+- [ ] Use a minimal floating top bar containing PairUp and "Join early."
+- [ ] Allow the top bar to become visible after the hero.
+- [ ] Route "Join early" directly to the approved signup card.
 
 ## Chapter 1 Review
 
-- [x] Review at the live URL on desktop.
-- [x] Review at the live URL on mobile.
-- [x] Verify text fit and zero horizontal overflow.
-- [x] Verify the hero without animation.
-- [x] Verify CTA behavior.
-- [x] Run the production build.
+- [ ] Review at the live URL on desktop.
+- [ ] Review at the live URL on mobile.
+- [ ] Verify text fit and zero horizontal overflow.
+- [ ] Verify the hero without animation.
+- [ ] Verify CTA behavior.
+- [ ] Run the production build.
 
 # Chapter 2 - Everyone Is Looking For Someone
 
-## Statements
+## Statements ()
 
-- [x] Show: "I have the idea. I need someone who can build it."
-- [x] Show: "I can code, but I need a designer."
-- [x] Show: "I want to join hackathons, but I never find the right team."
-- [x] Show: "I have skills. I just don't know the right people."
-- [x] Show: "I'm ready to build something beyond assignments."
-- [x] Make each statement feel like it belongs to a different student.
-- [x] Communicate: "You are not the only one struggling to find the right people."
+- [ ] Show: "I have the idea. I need someone who can build it."
+- [ ] Show: "I can code, but I need a designer."
+- [ ] Show: "I want to join hackathons, but I never find the right team."
+- [ ] Show: "I have skills. I just don't know the right people."
+- [ ] Show: "I'm ready to build something beyond assignments."
+- [ ] Make each statement feel like it belongs to a different student.
+- [ ] Communicate: "You are not the only one struggling to find the right people."
 
 ## User-Requested Carousel
 
-- [x] Use a clean vertical carousel rather than five unrelated cards.
-- [x] Keep one statement sharp and primary at a time.
-- [x] Keep the next or previous statement visible but softly blurred.
-- [x] Move the current statement upward as the next one becomes active.
-- [x] Do not make inactive statements vanish behind a line.
-- [x] Keep all statements accessible without relying on animation.
-- [x] Define reduced-motion behavior as a readable stacked sequence.
-
-## Named Statement Revision
-
-- [x] Remove the "02" index from the problem-section heading.
-- [x] Use Yash Y., Hriday kad., Mishra S., Aditya Ray., and Aarav M. above the five statements.
-- [x] Replace generic persona labels such as "The specialist."
-- [x] Change the visible skill set with each active statement.
-- [x] Keep all fourteen skill pills visible and only sharpen the four linked to the active voice.
-- [x] Preserve each pill as a stable node instead of replacing four labels in one position.
-- [x] Reset inherited pill insets so Frontend, Backend, and React remain content-sized instead of stretching into panels.
-- [x] Replace page-crossing jali shimmer with two overlaid meshes that breathe naturally and follow a smoothed cursor offset.
-- [x] Center the problems heading and helper, and increase their visual scale by roughly 50%.
-- [x] Add a slow dreamy jali drift and shimmer while preserving a flat-color background.
-- [x] Remove decorative dots from every problem-section skill pill.
-- [x] Keep the name and skill transitions autonomous without requiring scroll.
+- [ ] Use a clean vertical carousel rather than five unrelated cards.
+- [ ] Keep one statement sharp and primary at a time.
+- [ ] Keep the next or previous statement visible but softly blurred.
+- [ ] Move the current statement upward as the next one becomes active.
+- [ ] Do not make inactive statements vanish behind a line.
+- [ ] Keep all statements accessible without relying on animation.
+- [ ] Define reduced-motion behavior as a readable stacked sequence.
 
 ## Skill Signals
 
-- [x] React.
-- [x] UI/UX.
-- [x] AI/ML.
-- [x] Pitching.
-- [x] Product.
-- [x] Research.
-- [x] Video.
-- [x] Hardware.
-- [x] Frontend.
-- [x] Backend.
-- [x] Mobile.
-- [x] Data.
-- [x] Content.
-- [x] Keep the skill system extensible without displaying every tag at once.
+- [ ] React.
+- [ ] UI/UX.
+- [ ] AI/ML.
+- [ ] Pitching.
+- [ ] Product.
+- [ ] Research.
+- [ ] Video.
+- [ ] Hardware.
+- [ ] Frontend.
+- [ ] Backend.
+- [ ] Mobile.
+- [ ] Data.
+- [ ] Content.
+- [ ] Keep the skill system extensible without displaying every tag at once.
 
 ## Scene And Motion
 
-- [x] Make the section feel like many students are sending signals into the same space.
-- [x] Bring signals in from different edges.
-- [x] Let signals move independently at first.
-- [x] Reduce the distance between complementary signals as the visitor scrolls.
-- [x] Draw thin organic links between complementary skills.
-- [x] Connect Idea to Developer.
-- [x] Connect Developer to Designer.
-- [x] Connect Designer to Presenter.
-- [x] Avoid a technical network-diagram appearance.
-- [x] Carry the majestic night environment forward instead of switching to a generic light section.
+- [ ] Make the section feel like many students are sending signals into the same space.
+- [ ] Bring signals in from different edges.
+- [ ] Let signals move independently at first.
+- [ ] Reduce the distance between complementary signals as the visitor scrolls.
+- [ ] Draw thin organic links between complementary skills.
+- [ ] Connect Idea to Developer.
+- [ ] Connect Developer to Designer.
+- [ ] Connect Designer to Presenter.
+- [ ] Avoid a technical network-diagram appearance.
+- [ ] Carry the majestic night environment forward instead of switching to a generic light section.
 
 ## Compatible Pain Copy From The One-Page Brief
 
@@ -176,181 +172,127 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [ ] Include the transition about discovering people by skills, interests, availability, and ambition.
 - [ ] Ask before deciding the final visible combination of the two supplied copy sets.
 
-- [x] Remove carousel buttons and advance every voice on a timed loop without requiring scroll.
-- [x] Remove the scattered-signals progress bar and label.
-- [x] Reduce the problem-statement type size.
-
-## Complementary Skills Revision
-
-- [x] Reorganize the section around a readable 100-word body message.
-- [x] Use an exact 100-word lorem ipsum placeholder until final copy is approved.
-- [x] Replace "Not just people you already know." with "Expand your circle."
-- [x] Remove the "02 HOW IT WORKS" label.
-- [x] Run the people-coming-together vector automatically after entry instead of scrubbing it with scroll.
-- [x] Replace the role-node graphic with a dense pointer-responsive star field.
-- [x] Expand the dense star field across the complete section on desktop and mobile.
-- [x] Make individual stars oscillate between dim and bright while preserving pointer response.
-- [x] Form one autonomous two-to-five-person constellation at a time without a PairUp centre step.
-- [x] Use shooting stars to draw the team links, then transform the team points into coral profile circles.
-- [x] Expand each completed team by 30%, blur-dissolve it, restore the star field, and begin the next pattern.
-
 ## Chapter 2 Review
 
-- [x] Review carousel pacing at the live URL.
-- [x] Verify only one statement is primary at a time.
-- [x] Verify blurred neighboring content remains readable enough to imply continuity.
-- [x] Verify keyboard, touch, and reduced-motion behavior.
-- [x] Verify mobile reading order.
-- [x] Run the production build.
+- [ ] Review carousel pacing at the live URL.
+- [ ] Verify only one statement is primary at a time.
+- [ ] Verify blurred neighboring content remains readable enough to imply continuity.
+- [ ] Verify keyboard, touch, and reduced-motion behavior.
+- [ ] Verify mobile reading order.
+- [ ] Run the production build.
 
 # Chapter 3 - The Collision
 
 ## Central Promise
 
-- [x] Show: "Your next great team is already here."
-- [ ] Optional supporting line: "The people you need are closer than you think."
+- [ ] Show: "Your next great team may already be here."
 - [ ] Ask before choosing whether the optional supporting line is visible.
-- [x] Make this the first clear moment where PairUp becomes the answer.
-- [x] Communicate momentum, not connection alone.
+- [ ] Make this the first clear moment where PairUp becomes the answer.
+- [ ] Communicate momentum, not connection alone.
 
 ## Team Cluster
 
-- [x] Converge the scattered messages toward the centre.
-- [x] Increase environmental energy as profiles approach.
-- [x] Form a cluster of expressive profile cards.
-- [x] Include one developer.
-- [x] Include one designer.
-- [x] Include one product thinker.
-- [x] Include one presenter.
-- [x] Keep profiles fast and expressive rather than resume-like.
+- [ ] Converge the scattered messages toward the centre.
+- [ ] Increase environmental energy as profiles approach.
+- [ ] Form a cluster of expressive profile cards.
+- [ ] Include one developer.
+- [ ] Include one designer.
+- [ ] Include one product thinker.
+- [ ] Include one presenter.
+- [ ] Keep profiles fast and expressive rather than resume-like.
 
 ## Profile Information
 
-- [x] First name.
-- [x] University.
-- [x] Main skill.
-- [x] What the person wants to build.
-- [x] Availability status.
-- [x] Small personality signal.
-- [x] Use approved real profiles or clearly marked prototype data.
-- [x] Do not present invented profiles as real users.
-- [x] Use the Aarav and Meera examples only as internal visual fixtures unless approved for public display.
-- [x] Include statuses such as "Ready to build" and "Looking for a team."
+- [ ] First name.
+- [ ] University.
+- [ ] Main skill.
+- [ ] What the person wants to build.
+- [ ] Availability status.
+- [ ] Small personality signal.
+- [ ] Use approved real profiles or clearly marked prototype data.
+- [ ] Do not present invented profiles as real users.
+- [ ] Use the Aarav and Meera examples only as internal visual fixtures unless approved for public display.
+- [ ] Include statuses such as "Ready to build" and "Looking for a team."
 
 ## Motion
 
-- [x] Move individual profiles into orbit around a controlled luminous centre.
-- [x] Place the PairUp symbol at the centre.
-- [x] Send one quick pulse through the aligned network.
-- [x] Transition status from "Searching" to "Matched" to "Building."
-- [x] Make alignment one of the most satisfying page moments.
-- [x] Keep the glow controlled and avoid neon treatment.
-- [x] Provide a static completed-team reduced-motion state.
-
-## Swipe Integration Revision
-
-- [x] Show: "Swipe to find your people!"
-- [x] Review seven profile cards in one automatic sequence.
-- [x] Reject three anonymous role cards left with a prominent pastel-red edge.
-- [x] Accept four cards right with a prominent pastel-green edge.
-- [x] Resolve the accepted team into Agrima, Ria, Shreshth, and Yash.
-- [x] Show MUJ for all seven profile cards.
-- [x] Keep Shreyas, Aroh, and Anvay out of the rendered experience.
-- [x] Connect only the final four accepted cards to the PairUp centre.
-- [x] Present exactly one large profile card in the centre at a time.
-- [x] Reuse the approved signup profile-card visual language.
-- [x] Show Name and College fields rather than a phone field in the collision deck.
-- [x] Load the seven generated coral WebP portraits and keep every generated SVG out of the website.
-- [x] Morph accepted cards into the smaller final team profiles.
-- [x] Match the collision deck to the taller portrait ratio of the approved bottom signup card.
-- [x] Add one stationary X and check control pair for all seven automatic decisions.
-- [x] Synchronize each control press and bounce with its card swipe direction.
-- [x] Use the same coral treatment for all seven profile-image placeholders.
-- [x] Use solid cobalt section backgrounds with restrained Rajasthan-inspired mesh patterns.
-- [x] Give the problems, constellation, and collision sections distinct flat blue fields and distinct low-opacity Jaipur-inspired meshes.
-- [x] Make the central PairUp mark a single circular black-glass surface and remove its inner and outer rings.
-- [x] Add a restrained animated jali shimmer to the collision section so the open field does not feel empty.
+- [ ] Move individual profiles into orbit around a controlled luminous centre.
+- [ ] Place the PairUp symbol at the centre.
+- [ ] Send one quick pulse through the aligned network.
+- [ ] Transition status from "Searching" to "Matched" to "Building."
+- [ ] Make alignment one of the most satisfying page moments.
+- [ ] Keep the glow controlled and avoid neon treatment.
+- [ ] Provide a static completed-team reduced-motion state.
 
 ## Compatible How-It-Works Content
 
-- [x] Represent "Create your builder profile" within the forming profile cards.
-- [x] Represent skills, interests, preferred roles, and hackathon goals visually.
-- [x] Represent "Discover compatible teammates" through complementary-role attraction.
-- [x] Represent "Connect and start building" through the completed cluster.
-- [x] Avoid adding a separate speculative dashboard.
-- [x] Avoid building a full Tinder-style swipe deck.
+- [ ] Represent "Create your builder profile" within the forming profile cards.
+- [ ] Represent skills, interests, preferred roles, and hackathon goals visually.
+- [ ] Represent "Discover compatible teammates" through complementary-role attraction.
+- [ ] Represent "Connect and start building" through the completed cluster.
+- [ ] Avoid adding a separate speculative dashboard.
+- [ ] Avoid building a full Tinder-style swipe deck.
 
 ## Chapter 3 Review
-- [x] Verify zero accidental section gaps and zero horizontal overflow on desktop and mobile.
-- [x] Document the complete Gemini context bundle, copy-paste prompts, technical contracts, and acceptance tests in `ASSET_GENERATION.md`.
 
-- [x] Review convergence and orbit at the live URL.
-- [x] Verify the team composition is understandable without motion.
-- [x] Verify no profile text overflows.
-- [x] Verify mobile and reduced-motion states.
-- [x] Run the production build.
+- [ ] Review convergence and orbit at the live URL.
+- [ ] Verify the team composition is understandable without motion.
+- [ ] Verify no profile text overflows.
+- [ ] Verify mobile and reduced-motion states.
+- [ ] Run the production build.
 
 # Chapter 4 - The Place Is Already Moving
 
 ## Heading
 
-- [x] Use "Something is already forming." or "Builders are already showing up."
-- [x] Ask before choosing the final heading.
+- [ ] Use "Something is already forming." or "Builders are already showing up."
+- [ ] Ask before choosing the final heading.
 
 ## Activity Stream
-- [x] Replace product-activity claims with approved pre-launch status statements.
-- [x] Use the supplied pass-four statements for priority matching, the first-250 badge, university connections, startup circles, and "Built by us. For us."
-- [x] Remove claims that imply ideas, active teams, or matching already exist before launch.
-- [x] Ask for approval before writing the replacement carousel copy.
 
-- [x] Remove the obsolete designer-joined demo claim.
-- [x] Remove the obsolete active-team demo claim.
-- [x] Remove the obsolete active-idea demo claim.
-- [x] Remove the obsolete invented-username demo claim.
-- [x] Remove the obsolete daily-activity demo claim.
-- [x] Keep the approved pre-launch status statements in typed configuration.
-- [x] Remove the demo-activity label and unsupported live-product claims.
+- [ ] Support: "A designer joined from Jaipur."
+- [ ] Support: "Three AI builders are looking for a fourth teammate."
+- [ ] Support: "A product idea in sustainability is looking for a developer."
+- [ ] Support: "Someone reserved the username 'pixelpilot.'"
+- [ ] Support: "Five new builders joined today."
+- [ ] Treat these as configurable pitch/demo activity unless connected to real data.
+- [ ] Replace or clearly label demo activity before public release.
 
-## Momentum Numbers
-- [x] Replace the four speculative demo counters with one approved `100+ early builders` metric.
-- [x] Remove active ideas, universities represented, and teams forming.
-- [x] Remove or redesign the university signal map so it does not claim multiple universities.
-
-- [x] Support a config-controlled "early builders" count.
-- [x] Remove the config-controlled active-ideas counter.
-- [x] Remove the config-controlled universities counter.
-- [x] Remove the config-controlled teams-forming counter.
-- [x] Remove the speculative 248, 37, 12, and 68 demo fixtures.
-- [x] Keep all values in one typed configuration file.
-- [x] Use the approved 100+ early-builder value and remove unsupported values.
-- [x] Avoid layout shift when values change.
+## Momentum Numbers![alt text](image.png)
+- [ ] Support a config-controlled "active ideas" count.
+- [ ] Support a config-controlled "universities represented" count.
+- [ ] Support a config-controlled "teams forming" count.
+- [ ] Use the design examples 248, 37, 12, and 68 only as demo fixtures.
+- [ ] Keep all values in one typed configuration file.
+- [ ] Replace demo values with real data when available.
+- [ ] Avoid layout shift when values change.
 
 ## Visual Style
 
-- [x] Make PairUp feel alive rather than like an empty pre-launch platform.
-- [x] Build a living digital-city signal field, not a traditional analytics dashboard.
-- [x] Let activity messages enter, leave, and rearrange.
-- [x] Use small profile or avatar circles moving through the scene.
-- [x] Let skill tags flow continuously.
-- [x] Keep the activity integrated with the cinematic environment.
+- [ ] Make PairUp feel alive rather than like an empty pre-launch platform.
+- [ ] Build a living digital-city signal field, not a traditional analytics dashboard.
+- [ ] Let activity messages enter, leave, and rearrange.
+- [ ] Use small profile or avatar circles moving through the scene.
+- [ ] Let skill tags flow continuously.
+- [ ] Keep the activity integrated with the cinematic environment.
 
 ## Motion
 
-- [x] Count numbers upward when the chapter enters.
-- [x] Slide activity messages gently into a queue.
-- [x] Light profile circles one by one.
-- [x] Let a thin line travel between university labels.
-- [x] Suggest that PairUp continues operating when the visitor is not interacting.
-- [x] Keep motion calm enough for scanning.
-- [x] Provide a static reduced-motion queue.
+- [ ] Count numbers upward when the chapter enters.
+- [ ] Slide activity messages gently into a queue.
+- [ ] Light profile circles one by one.
+- [ ] Let a thin line travel between university labels.
+- [ ] Suggest that PairUp continues operating when the visitor is not interacting.
+- [ ] Keep motion calm enough for scanning.
+- [ ] Provide a static reduced-motion queue.
 
 ## Chapter 4 Review
 
-- [x] Review the live-looking activity at the live URL.
-- [x] Verify the approved pre-launch value and statements are isolated in configuration.
-- [x] Verify the scene does not resemble a dashboard template.
-- [x] Verify mobile and reduced-motion states.
-- [x] Run the production build.
+- [ ] Review the live-looking activity at the live URL.
+- [ ] Verify demo values are isolated in configuration.
+- [ ] Verify the scene does not resemble a dashboard template.
+- [ ] Verify mobile and reduced-motion states.
+- [ ] Run the production build.
 
 # Chapter 5 - Build Anything
 
@@ -506,8 +448,8 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [ ] Alternative: "The right people are showing up. Be one of them."
 - [ ] Ask before choosing the final main line.
 - [ ] Place the approved signup card centrally.
-- [x] Erase "Your profile" with a visible cursor and reveal the name field as the signup enters view.
-- [x] Collect name and phone number only.
+- [ ] Initially show one field only.
+- [ ] Decide whether the one field accepts phone only or both phone and university email.
 - [ ] Final CTA: "Claim my Founding Builder badge."
 - [ ] Under-button line: "Free to join. Takes less than 20 seconds."
 - [ ] Verify the timing claim before public use.
@@ -518,14 +460,12 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [x] Premium profile-card design.
 - [x] Phone-number field.
 - [x] Swipe right to join.
-- [x] External coral check-button completion.
-- [x] Scroll-entry rightward hint and name-erasure cursor.
-- [x] Invalid-name and invalid-number recovery.
-- [x] External black cross control clears the profile.
+- [x] Arrow-button completion.
+- [x] Scroll-entry rightward hint.
+- [x] Invalid-number recovery.
 - [x] Mobile fit without horizontal overflow.
-- [x] Remove the LIVE pill from the signup profile.
 - [ ] Integrate it into the connected final network without redesigning its approved core.
-- [x] Connect every current primary CTA to this card.
+- [ ] Connect every primary CTA to this card.
 
 ## Optional Profile Pills From The Design Document
 
@@ -584,16 +524,16 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 
 ## Exact Palette
 
-- [x] Base deep black-blue: #070912.
-- [x] Primary pastel violet: #8978CF.
-- [x] Human accent pastel coral: #E98B7F.
-- [x] Secondary pastel signal cyan: #8ACBD2.
-- [x] Primary text: #F7F7FB.
-- [x] Secondary text: #A7A9B8.
-- [x] Badge: pastel violet, cyan, silver, and a slight warm highlight.
-- [x] Preserve the approved swipe-card composition while softening coral.
-- [x] Keep violet and cyan controlled so the page does not become neon or one-note.
-- [x] Use black and bone terrain to balance the cobalt environment.
+- [ ] Base deep black-blue: #070912.
+- [ ] Primary electric violet: #7B61FF.
+- [ ] Human accent warm coral: #FF6B6B.
+- [ ] Secondary signal cyan: #5DE4FF.
+- [ ] Primary text: #F7F7FB.
+- [ ] Secondary text: #A7A9B8.
+- [ ] Badge: violet, cyan, silver, and a slight warm highlight.
+- [ ] Reconcile the current coral token with #FF6B6B while preserving the approved swipe-card composition.
+- [ ] Keep violet and cyan controlled so the page does not become neon or one-note.
+- [ ] Use black and bone terrain to balance the cobalt environment.
 
 # Typography
 
@@ -631,7 +571,7 @@ This checklist follows `websitedesign.md` in the same story order. It is the imp
 - [ ] Pin only scenes that need time to communicate.
 - [ ] Keep the hero fixed while isolated dots appear when appropriate.
 - [ ] Converge profile cards through the Chapter 3 scroll scene.
-- [x] Count activity numbers when Chapter 4 enters.
+- [ ] Count activity numbers when Chapter 4 enters.
 - [ ] Rotate and reveal Founding Builder perks in Chapter 6.
 - [ ] Settle the final network behind the signup in Chapter 8.
 - [ ] Avoid excessive pinning on mobile.

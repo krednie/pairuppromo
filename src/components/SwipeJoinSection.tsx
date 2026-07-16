@@ -57,7 +57,7 @@ export function SwipeJoinSection() {
   const [phone, setPhone] = useState("")
   const [error, setError] = useState("")
   const [errorField, setErrorField] = useState<"name" | "phone" | "">("")
-  const [phase, setPhase] = useState<"idle" | "leaving" | "joined">("idle")
+  const [phase, setPhase] = useState<"idle" | "saving" | "leaving" | "joined">("idle")
   const [dragging, setDragging] = useState(false)
   const [nameEditorReady, setNameEditorReady] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
@@ -121,10 +121,33 @@ export function SwipeJoinSection() {
       return
     }
 
-    window.localStorage.setItem("pairup-swipe-name", cleanName)
-    window.localStorage.setItem("pairup-swipe-phone", cleanPhone)
     setError("")
     setErrorField("")
+    setPhase("saving")
+
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: cleanName, phone: cleanPhone }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Signup request failed")
+      }
+    } catch {
+      setPhase("idle")
+      setError("Could not save your profile. Try again.")
+      setErrorField("")
+      resetCard()
+      return
+    }
+
+    window.localStorage.setItem("pairup-swipe-name", cleanName)
+    window.localStorage.setItem("pairup-swipe-phone", cleanPhone)
     setPhase("leaving")
 
     if (!reducedMotion) {
@@ -224,6 +247,7 @@ export function SwipeJoinSection() {
                   onDragEnd={finishDrag}
                   onKeyDown={handleCardKeyDown}
                   tabIndex={0}
+                  aria-busy={phase === "saving"}
                   aria-label="Founding Builder profile card"
                 >
                   <header className="swipe-card-header">
@@ -303,6 +327,7 @@ export function SwipeJoinSection() {
                     className="swipe-card-action swipe-card-reject"
                     type="button"
                     onClick={clearProfile}
+                    disabled={phase === "saving"}
                     aria-label="Clear profile"
                     title="Clear profile"
                   >
@@ -312,6 +337,7 @@ export function SwipeJoinSection() {
                     className="swipe-card-action swipe-card-accept"
                     type="button"
                     onClick={() => void join()}
+                    disabled={phase === "saving"}
                     aria-label="Join PairUp"
                     title="Join PairUp"
                   >

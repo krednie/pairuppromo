@@ -55,22 +55,22 @@ function seededNoise(index: number) {
   return value - Math.floor(value)
 }
 
-function mapPatternPoint(point: Point, width: number, height: number): Point {
+function mapPatternPoint(point: Point, width: number, height: number, lane: number): Point {
   if (width >= 820) {
     return {
       x: width * (0.52 + point.x * 0.43),
-      y: height * (0.11 + point.y * 0.76),
+      y: height * ((lane === 0 ? 0.08 : 0.54) + point.y * 0.36),
     }
   }
 
   return {
-    x: width * (0.08 + point.x * 0.84),
-    y: height * (0.52 + point.y * 0.42),
+    x: width * ((lane === 0 ? 0.06 : 0.54) + point.x * 0.4),
+    y: height * (0.52 + point.y * 0.43),
   }
 }
 
-function drawProfile(context: CanvasRenderingContext2D, point: Point, progress: number) {
-  const radius = 4 + progress * 17
+function drawProfile(context: CanvasRenderingContext2D, point: Point, progress: number, maxRadius: number) {
+  const radius = 3 + progress * maxRadius
   context.save()
   context.globalAlpha *= 0.18 + progress * 0.82
   context.fillStyle = "#e98b7f"
@@ -126,8 +126,9 @@ function drawConstellation(
   height: number,
   lifecycle: number,
   patternIndex: number,
+  lane: number,
 ) {
-  const points = pattern.map((point) => mapPatternPoint(point, width, height))
+  const points = pattern.map((point) => mapPatternPoint(point, width, height, lane))
   const segments = points.slice(0, -1).map((point, index) => [point, points[index + 1]] as const)
   if (points.length > 3) segments.push([points[points.length - 1], points[0]])
 
@@ -188,7 +189,7 @@ function drawConstellation(
       context.fill()
     }
     context.globalAlpha = alpha
-    drawProfile(context, point, profileProgress)
+    drawProfile(context, point, profileProgress, width < 560 ? 11 : 16)
   })
 
   context.restore()
@@ -278,21 +279,28 @@ export function ConstellationField() {
 
       if (entered) {
         if (reducedMotion) {
-          drawConstellation(context, constellationPatterns[2], width, height, 0.62, 2)
+          drawConstellation(context, constellationPatterns[2], width, height, 0.62, 2, 0)
+          drawConstellation(context, constellationPatterns[4], width, height, 0.62, 4, 1)
         } else {
           const elapsed = Math.max(time - startTime, 0)
-          const cycleDuration = 5000
-          const activeDuration = 4400
-          const cycleIndex = Math.floor(elapsed / cycleDuration)
-          const localTime = elapsed % cycleDuration
-          if (localTime < activeDuration) {
+          const cycleDuration = 3500
+          const activeDuration = 3050
+
+          for (let lane = 0; lane < 2; lane += 1) {
+            const laneElapsed = Math.max(elapsed - lane * 420, 0)
+            const cycleIndex = Math.floor(laneElapsed / cycleDuration)
+            const localTime = laneElapsed % cycleDuration
+            if (localTime >= activeDuration) continue
+
+            const patternIndex = (cycleIndex * 2 + lane) % constellationPatterns.length
             drawConstellation(
               context,
-              constellationPatterns[cycleIndex % constellationPatterns.length],
+              constellationPatterns[patternIndex],
               width,
               height,
               localTime / activeDuration,
-              cycleIndex % constellationPatterns.length,
+              patternIndex,
+              lane,
             )
           }
         }

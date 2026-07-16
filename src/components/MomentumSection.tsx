@@ -122,8 +122,12 @@ export function MomentumSection() {
 
       <div className="momentum-skills" aria-label="Skills PairUp will support at launch">
         <div className="momentum-skills-track">
-          {[...momentumConfig.skills, ...momentumConfig.skills].map((skill, index) => (
-            <span aria-hidden={index >= momentumConfig.skills.length} key={skill + index}>{skill}</span>
+          {[0, 1].map((group) => (
+            <div className="momentum-skills-group" aria-hidden={group === 1} key={group}>
+              {momentumConfig.skills.map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
           ))}
         </div>
       </div>
