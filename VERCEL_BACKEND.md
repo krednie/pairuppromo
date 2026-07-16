@@ -1,254 +1,316 @@
-# PairUp Signup Persistence
+# PairUp Production Backend Runbook
 
-The profile form sends only the builder's name and phone number to
-POST /api/signup. Phone numbers are normalized for duplicate detection.
-Submitting the same number again updates the existing record.
+This is the current deployment procedure for PairUp. The Vercel project and
+Neon database already exist. Do not create another database or integration.
 
-## Before You Start
+The current signup flow saves one complete record only after a builder has:
 
-You need:
+1. Entered a valid name and phone number.
+2. Selected one founding charm.
+3. Reached the final optional referral-code field.
+4. Accepted the card a second time.
 
-1. The PairUp project already deployed on Vercel.
-2. Permission to install integrations for the Vercel team that owns it.
-3. Access to the Neon project that will hold production signup data.
+Each completed builder receives a permanent referral code. When another
+builder enters that code, the new row stores the original builder in
+`referred_by_id`.
 
-The repository already contains:
+## Release Order
 
-- api/signup.ts: the Vercel Function.
-- db/schema.sql: the database table and index.
-- DATABASE_URL support in the function.
-- @neondatabase/serverless in package.json.
+Run the database migration before deploying the new API. The old deployment
+continues to work after the migration, so this order avoids downtime:
 
-## Option A: Create Neon Through Vercel
+1. Confirm the production database connection.
+2. Back up or inspect the existing rows.
+3. Run `db/schema.sql` in Neon.
+4. Verify the migrated schema and existing data.
+5. Push the code and deploy it on Vercel.
+6. Test one normal signup and one referred signup.
 
-Use this option when PairUp does not already have a Neon database.
+Do not remove the new database columns when rolling back application code.
+They are backward-compatible with the previous deployment.
 
-### 1. Install Neon
-
-1. Sign in to https://vercel.com/dashboard.
-2. Select the team that owns the PairUp project.
-3. Open **Integrations** in the left sidebar.
-4. Select **Browse Marketplace**.
-5. Search for **Neon**.
-6. Open **Neon Postgres** and select **Install**.
-7. Review the requested permissions and select **Install** again.
-8. Choose **Create New Neon Account** when asked which integration mode to use.
-
-Official integration page:
-https://vercel.com/marketplace/neon/neon
-
-### 2. Create the Database
-
-1. Select the free plan unless PairUp already needs a paid Neon plan.
-2. Choose a region close to the Vercel Function region. For users in India,
-   select the closest available Asian region.
-3. Set the database or resource name to **pairup-production**.
-4. Select **Create**.
-5. When Vercel asks which project to connect, choose the deployed PairUp
-   project.
-6. Enable the connection for:
-   - Production
-   - Preview
-   - Development
-7. Finish the connection.
-
-Vercel should now inject the database credentials into the selected project.
-
-### 3. Confirm DATABASE_URL
+## 1. Confirm The Production Database
 
 1. Open the PairUp project in Vercel.
-2. Open **Settings**.
-3. Open **Environment Variables**.
-4. Search for **DATABASE_URL**.
-5. Confirm it exists for Production, Preview, and Development.
-6. Do not reveal, paste into chat, or commit its value.
+2. Go to **Settings > Environment Variables**.
+3. Confirm `DATABASE_URL` exists for **Production**.
+4. Enable it for **Preview** only if preview deployments should write to this
+   database. A separate Neon branch is safer for previews.
+5. Open the connected Neon project and select the branch/database referenced
+   by `DATABASE_URL`.
 
-If DATABASE_URL is missing, use the manual fallback later in this document.
+Use a pooled Neon connection string. Never paste it into source files, commit
+it, or expose it in browser environment variables such as `VITE_*`.
 
-### 4. Create the Signup Table
+## 2. Inspect Existing Data
 
-1. Return to the PairUp project in Vercel.
-2. Open **Storage**.
-3. Select the connected Neon database.
-4. Select **Open in Neon Console**.
-5. In Neon, select the production branch, normally named **main**.
-6. Open **SQL Editor**.
-7. Confirm the selected database is the database connected to PairUp.
-8. Paste and run the following SQL:
+In the Neon SQL Editor, run:
 
-    CREATE TABLE IF NOT EXISTS pairup_signups (
-      id BIGSERIAL PRIMARY KEY,
-      name VARCHAR(80) NOT NULL,
-      phone VARCHAR(32) NOT NULL,
-      phone_normalized VARCHAR(15) NOT NULL UNIQUE,
-      source VARCHAR(32) NOT NULL DEFAULT 'prelaunch',
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
+```sql
+SELECT COUNT(*)::int AS existing_signups
+FROM pairup_signups;
 
-    CREATE INDEX IF NOT EXISTS pairup_signups_created_at_idx
-      ON pairup_signups (created_at DESC);
+SELECT id, name, phone_normalized, badge, created_at
+FROM pairup_signups
+ORDER BY created_at DESC
+LIMIT 20;
+```
 
-9. Wait for the SQL Editor to report success.
-10. Run this query to verify the table exists:
+Export the table from Neon before migration if these records are important and
+no recent backup exists.
 
-    SELECT table_name
-    FROM information_schema.tables
-    WHERE table_schema = 'public'
-      AND table_name = 'pairup_signups';
+## 3. Run The Migration
 
-The result must contain one row named pairup_signups.
+1. Open [`db/schema.sql`](db/schema.sql) from this repository.
+2. Copy the entire file into the Neon SQL Editor.
+3. Confirm the editor is connected to the production branch and database.
+4. Run the complete file once.
 
-### 5. Redeploy PairUp
+The migration is repeatable. It:
 
-Environment variables are available only to new deployments.
+- Keeps existing signups.
+- Adds and validates the ten allowed charm identifiers.
+- Adds `referral_code` and `referred_by_id`.
+- Backfills a unique referral code for every existing builder.
+- Requires referral codes for all rows.
+- Requires charms for new or updated rows.
+- Adds the referral foreign key and lookup indexes.
 
-1. Return to the PairUp project in Vercel.
-2. Open **Deployments**.
-3. Open the menu for the latest production deployment.
-4. Select **Redeploy**.
-5. Keep the existing production domain selected.
-6. Confirm the redeploy.
-7. Wait until the deployment status is **Ready**.
+Existing rows without a charm remain readable. The charm-required constraint
+is created with `NOT VALID`, which still enforces the rule for every new or
+updated row without deleting legacy records.
 
-### 6. Test a Real Signup
+## 4. Verify The Migration
 
-1. Open the production PairUp URL.
-2. Scroll to the Founding Builder profile card.
-3. Enter a test name and a phone number you control.
-4. Press the green check button or swipe the card right.
-5. Confirm the success card appears.
-6. Return to Neon's SQL Editor.
-7. Run:
+Run all three checks.
 
-    SELECT id, name, phone, source, created_at, updated_at
-    FROM pairup_signups
-    ORDER BY created_at DESC
-    LIMIT 20;
+### Required columns
 
-8. Confirm the test signup is the first row.
-9. Submit the same phone number again with a changed name.
-10. Run the query again. The same row should have the new name and a newer
-    updated_at value; a duplicate row should not be created.
+```sql
+SELECT column_name, data_type, is_nullable
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name = 'pairup_signups'
+  AND column_name IN (
+    'badge',
+    'referral_code',
+    'referred_by_id'
+  )
+ORDER BY column_name;
+```
 
-Delete the test row if it should not remain:
+Expected: three rows. `referral_code` must have `is_nullable = NO`.
 
-    DELETE FROM pairup_signups
-    WHERE phone_normalized = '919876543210';
+### Backfill and uniqueness
 
-Replace the example number with the normalized test number before running the
-delete query. Indian ten-digit numbers are stored with 91 prefixed.
+```sql
+SELECT
+  COUNT(*) FILTER (WHERE referral_code IS NULL)::int AS missing_codes,
+  COUNT(*)::int AS total_rows,
+  COUNT(DISTINCT referral_code)::int AS unique_codes,
+  COUNT(*) FILTER (WHERE badge IS NULL)::int AS legacy_rows_without_charm
+FROM pairup_signups;
+```
 
-## Option B: Link an Existing Neon Project
+Expected:
 
-Use this option when a Neon account and database already exist.
+- `missing_codes` is `0`.
+- `total_rows` equals `unique_codes`.
+- `legacy_rows_without_charm` may be greater than zero for old signups.
 
-1. Install Neon from the Vercel Marketplace using the steps above.
-2. Choose **Link Existing Neon Account** instead of Create New Neon Account.
-3. Authorize Vercel in Neon.
-4. Select the existing Neon project, branch, database, and role.
-5. Connect it to the PairUp Vercel project.
-6. Enable Production, Preview, and Development.
-7. Confirm DATABASE_URL under Vercel project **Settings > Environment
-   Variables**.
-8. Run db/schema.sql in that Neon database's SQL Editor.
-9. Redeploy and complete the real-signup verification above.
+### Foreign key and indexes
 
-## Manual DATABASE_URL Fallback
+```sql
+SELECT indexname
+FROM pg_indexes
+WHERE schemaname = 'public'
+  AND tablename = 'pairup_signups'
+ORDER BY indexname;
 
-Use this only if the integration did not inject DATABASE_URL.
+SELECT conname, contype, convalidated
+FROM pg_constraint
+WHERE conrelid = 'pairup_signups'::regclass
+ORDER BY conname;
+```
 
-1. Open the Neon Console.
-2. Open the PairUp Neon project.
-3. Select **Connect**.
-4. Select the production branch, database, and role.
-5. Copy the pooled Postgres connection string.
-6. In Vercel, open the PairUp project.
-7. Go to **Settings > Environment Variables**.
-8. Select **Add New**.
-9. Set the name to **DATABASE_URL**.
-10. Paste the Neon connection string as the value.
-11. Enable Production, Preview, and Development.
-12. Mark it sensitive if Vercel presents that option.
-13. Select **Save**.
-14. Redeploy the production deployment.
+Expected indexes include:
 
-Never place the real connection string in .env.example or commit it to Git.
+- `pairup_signups_phone_normalized_key`
+- `pairup_signups_referral_code_idx`
+- `pairup_signups_referred_by_idx`
+- `pairup_signups_created_at_idx`
 
-## Local End-to-End Test
+`pairup_signups_badge_required` may show `convalidated = false` while legacy
+rows have no charm. This is intentional. Once every old row has a valid charm,
+it can be fully validated with:
 
-Plain Vite does not execute files in api/. Use Vercel's local runtime:
+```sql
+ALTER TABLE pairup_signups
+VALIDATE CONSTRAINT pairup_signups_badge_required;
+```
 
-1. From the repository root, run:
+Do not run that command until `legacy_rows_without_charm` is zero.
 
-    npx vercel login
+## 5. Deploy On Vercel
 
-2. Link the local folder to the existing PairUp project:
+From the repository root, verify the exact revision being pushed:
 
-    npx vercel link
+```bash
+npm ci
+npm run build
+npm run audit:ui
+git status --short
+```
 
-3. Choose the correct Vercel team and PairUp project when prompted.
-4. Start the full frontend and API runtime:
+Then commit and push the intended files. Vercel should build the connected
+branch automatically. In the Vercel deployment page, confirm:
 
-    npx vercel dev
+- Build command: `npm run build`
+- Output directory: `dist`
+- The deployment status is **Ready**
+- `DATABASE_URL` is available to the deployment environment
+- `/api/signup` appears in the Functions list
 
-5. Open the local URL printed by Vercel.
-6. Submit the profile card.
-7. Verify the row in Neon with the SELECT query above.
+Do not set an Install Command that installs a global or prerelease TypeScript
+version. The project pins TypeScript in `devDependencies`, and `npm ci` should
+use the committed lockfile.
 
-Vercel dev downloads Development environment variables into its runtime. Do
-not use npm run dev for a database-write test because it starts Vite only.
+## 6. Test The Production Flow
+
+Use phone numbers you control.
+
+### Builder A
+
+1. Open `https://pairuppromo.vercel.app/`.
+2. Enter a name and phone number in the final profile card.
+3. Select a charm.
+4. Press the coral check button or swipe right.
+5. Confirm the optional referral field appears only now.
+6. Leave it empty and accept again.
+7. Record the referral code shown on the success card.
+
+No database request should occur before step 6.
+
+### Builder B
+
+1. Repeat the flow with a different phone number.
+2. Enter Builder A's code in the final referral field.
+3. Accept the card.
+
+Verify both rows in Neon:
+
+```sql
+SELECT
+  id,
+  name,
+  phone_normalized,
+  badge,
+  referral_code,
+  referred_by_id,
+  created_at,
+  updated_at
+FROM pairup_signups
+ORDER BY created_at DESC
+LIMIT 20;
+```
+
+Builder B's `referred_by_id` must equal Builder A's `id`. Both builders must
+have a valid charm and their own distinct referral code.
+
+Test duplicate handling by submitting Builder A's phone number again with a
+different name or charm. The existing row should update without changing its
+`id`, `referral_code`, or existing `referred_by_id`.
+
+## Referral Reporting
+
+Use this query for referral totals:
+
+```sql
+SELECT
+  owner.id,
+  owner.name,
+  owner.referral_code,
+  COUNT(referred.id)::int AS referrals
+FROM pairup_signups AS owner
+LEFT JOIN pairup_signups AS referred
+  ON referred.referred_by_id = owner.id
+GROUP BY owner.id
+ORDER BY referrals DESC, owner.created_at ASC;
+```
+
+One signup can credit only one referrer. Re-submitting the same phone number
+does not create another referral or replace an existing attribution.
+
+## Data Correction And Deletion
+
+PairUp accepts requests at `krednie@gmail.com`. Verify ownership before
+changing or deleting a record. Search by normalized phone number:
+
+```sql
+SELECT id, name, phone, phone_normalized, badge, referral_code, created_at
+FROM pairup_signups
+WHERE phone_normalized = '919876543210';
+```
+
+Delete only after confirming the exact row:
+
+```sql
+DELETE FROM pairup_signups
+WHERE id = 12345
+RETURNING id, phone_normalized;
+```
+
+Deleting a referrer sets their referrals' `referred_by_id` to `NULL`; it does
+not delete those other builders.
 
 ## Troubleshooting
 
-### The form says signup is temporarily unavailable
+### `Signup is temporarily unavailable`
 
-The function cannot see DATABASE_URL.
+The function cannot read `DATABASE_URL`. Confirm the variable is enabled for
+the failing Vercel environment, then redeploy.
 
-1. Check **Vercel Project > Settings > Environment Variables**.
-2. Confirm DATABASE_URL is enabled for the environment being tested.
-3. Redeploy after adding or changing it.
+### `Could not save your profile`
 
-### The form says it could not save the profile
+1. Open **Vercel > Deployments > Logs**.
+2. Filter for `/api/signup`.
+3. Confirm `db/schema.sql` ran against the same database used by Vercel.
+4. Re-run the migration verification queries.
+5. Confirm the Neon project is active and the connection string is pooled.
 
-The function reached the database but the query failed.
+Errors mentioning missing `badge`, `referral_code`, or `referred_by_id` mean
+the API was deployed before the production migration completed.
 
-1. Confirm db/schema.sql was run against the connected database.
-2. Confirm pairup_signups exists in Neon's **Tables** view.
-3. Open **Vercel Project > Logs**.
-4. Filter for /api/signup and inspect the newest failed request.
-5. Confirm the Neon project is active and DATABASE_URL points to the intended
-   branch and database.
+### Referral code is rejected
 
-### The frontend returns 404 for /api/signup locally
+Codes are case-insensitive in the UI and stored uppercase. The API rejects
+unknown codes and self-referrals with the same generic message. Verify the
+code directly in Neon without exposing the owner's phone number:
 
-The site was started with Vite. Stop it and use:
+```sql
+SELECT id, referral_code
+FROM pairup_signups
+WHERE referral_code = 'PUXXXXXXXX';
+```
 
-    npx vercel dev
+### Local `/api/signup` returns 404
 
-### Production works but Preview fails
+`npm run dev` starts Vite only. For a real local function test:
 
-DATABASE_URL is enabled for Production but not Preview. Edit the environment
-variable in Vercel, enable Preview, and redeploy the preview.
+```bash
+npx vercel link
+npx vercel dev
+```
 
-## Security And Data Handling
+Use a separate Neon development branch where possible.
 
-- Treat phone numbers as personal data.
-- Do not expose a signup-list API publicly.
-- Do not log request bodies or full phone numbers.
-- Restrict Neon and Vercel project access to the PairUp team.
-- Export or delete signup data only through authenticated Neon access.
-- Add a privacy notice and retention policy before public promotion.
+## Operational Rules
 
-## Official References
-
-- Vercel Marketplace storage:
-  https://vercel.com/docs/marketplace-storage
-- Installing a Vercel native integration:
-  https://vercel.com/docs/integrations/install-an-integration/product-integration
-- Neon integration for Vercel:
-  https://vercel.com/marketplace/neon/neon
-- Manual Neon and Vercel connection:
-  https://neon.com/docs/guides/vercel-manual
-- Neon serverless driver:
-  https://neon.com/docs/serverless/serverless-driver
+- Treat names, phone numbers, and referral relationships as personal data.
+- Never expose a public endpoint that lists signups.
+- Never log request bodies or complete phone numbers.
+- Restrict Neon and Vercel access to the PairUp team.
+- Keep production and preview databases separate where practical.
+- Review failed function requests and Neon usage after each release.
+- Replace unlicensed prototype product imagery before commercial launch; see
+  [`BADGE_ASSETS.md`](BADGE_ASSETS.md).

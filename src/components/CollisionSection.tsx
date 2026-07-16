@@ -16,6 +16,7 @@ const profiles = [
     goal: "Sustainability",
     status: "Looking for a team",
     university: "MUJ",
+    charm: "/assets/badges/teddy.webp",
     decision: "rejected" as Decision,
     icon: Search,
   },
@@ -28,6 +29,7 @@ const profiles = [
     goal: "AI tools · Hackathons",
     status: "Ready to build",
     university: "MUJ",
+    charm: "/assets/badges/diet-coke.webp",
     decision: "accepted" as Decision,
     icon: Code2,
   },
@@ -40,6 +42,7 @@ const profiles = [
     goal: "Consumer apps",
     status: "Looking for a team",
     university: "MUJ",
+    charm: "/assets/badges/porsche-911-gt3-rs.webp",
     decision: "rejected" as Decision,
     icon: Video,
   },
@@ -52,6 +55,7 @@ const profiles = [
     goal: "Consumer apps",
     status: "Looking for a team",
     university: "MUJ",
+    charm: "/assets/badges/lip-gloss.webp",
     decision: "accepted" as Decision,
     icon: Palette,
   },
@@ -64,6 +68,7 @@ const profiles = [
     goal: "Hackathons",
     status: "Looking for a team",
     university: "MUJ",
+    charm: "/assets/badges/jordan-wolf-grey.webp",
     decision: "rejected" as Decision,
     icon: Cpu,
   },
@@ -76,6 +81,7 @@ const profiles = [
     goal: "Sustainability",
     status: "Ready to build",
     university: "MUJ",
+    charm: "/assets/badges/koenigsegg-jesko.webp",
     decision: "accepted" as Decision,
     icon: Lightbulb,
   },
@@ -88,6 +94,7 @@ const profiles = [
     goal: "Story · Hackathons",
     status: "Looking for a team",
     university: "MUJ",
+    charm: "/assets/badges/burger.webp",
     decision: "accepted" as Decision,
     icon: Mic2,
   },
@@ -170,7 +177,7 @@ export function CollisionSection() {
           <strong>PairUp</strong>
         </div>
 
-        {profiles.map(({ className, portrait, name, role, detail, goal, status, university, decision, icon: Icon }, index) => (
+        {profiles.map(({ className, portrait, name, role, detail, goal, status, university, charm, decision, icon: Icon }, index) => (
           <article
             className={"collision-card " + className + " is-" + decision}
             aria-hidden={phase === "building" && decision === "rejected"}
@@ -181,6 +188,10 @@ export function CollisionSection() {
               <span><BrandMark /> PairUp</span>
               <span>PROFILE {String(index + 1).padStart(2, "0")}</span>
             </header>
+
+            <span className="collision-profile-charm" aria-hidden="true">
+              <img src={charm} alt="" loading="lazy" decoding="async" />
+            </span>
 
             <div className="collision-profile-photo" aria-label="Profile portrait">
               <img src={portrait} alt="" loading="lazy" decoding="async" />

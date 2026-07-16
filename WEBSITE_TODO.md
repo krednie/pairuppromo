@@ -13,13 +13,19 @@
 - [x] Run two non-overlapping constellation teams at once and shorten the formation cycle by about 40%.
 - [x] Keep the Chapter 4 skill pills looping continuously after Hardware.
 - [x] Change the university activity line from cool people to amazing people.
-- [x] Add a Vercel signup function that stores name and phone only.
+- [x] Add a Vercel signup function that stores name, phone, and the selected founding charm.
 - [x] Add normalized-phone duplicate handling and the Neon database schema.
 - [x] Verify production build, desktop/mobile overflow, canvas activity, and marquee continuity.
 - [x] Remove rejected generated SVGs, duplicate portrait sources, caches, and temporary test output.
 - [ ] Reattach the requested Agrima portrait and identify its current owner before swapping.
 - [ ] Connect Neon to the hosted Vercel project, run the schema, and verify a live database write.
-- [ ] Choose the Founding Member badge collection before implementing the selector.
+- [x] Choose and implement the ten-item Founding Member charm collection.
+- [x] Save the selected charm with the name and phone number in Neon.
+- [x] Add About, Privacy, Terms, Credits, contact, robots.txt, and sitemap.xml.
+- [x] Add origin, content-type, payload-size, allowlist, security-header, and duplicate-submit protections.
+- [x] Split the landing, legal, and signup bundles and remove the stale dialog and Three.js prototype code.
+- [x] Verify the two-stage flow, API payload, retry path, assets, reduced motion, and zero overflow at 320px, 390px, 768px, and 1440px.
+- [ ] Run the badge-column migration in the production Neon database before deploying this version.
 
 This checklist follows `websitedesign.md` in the same story order. It is the implementation source of truth.
 

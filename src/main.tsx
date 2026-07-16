@@ -10,6 +10,7 @@ import "./complementary-revision.css"
 import "./chapter-three.css"
 import "./chapter-four.css"
 import "./swipe-revision.css"
+import "./site-pages.css"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

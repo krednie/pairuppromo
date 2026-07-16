@@ -35,7 +35,7 @@ export const momentumConfig: MomentumConfig = {
   ],
   activities: [
     { id: "priority-queue", message: "Early members enter the priority matching queue.", signal: "01" },
-    { id: "founding-badge", message: "The first 250 members choose an exclusive Founding Member badge and receive support + perks.", signal: "02" },
+    { id: "founding-badge", message: "The first 250 members choose limited-time charms and receive support + perks.", signal: "02" },
     { id: "university-circle", message: "Get to know amazing people at your university.", signal: "03" },
     { id: "startup-circle", message: "Find your dream startup circle.", signal: "04" },
     { id: "built-by-us", message: "Built by us. For us.", signal: "05" },

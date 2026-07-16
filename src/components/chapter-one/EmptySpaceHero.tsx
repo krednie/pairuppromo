@@ -1,6 +1,7 @@
 import { useRef, type PointerEvent } from "react"
 import { ArrowDown, ArrowRight, MoveRight } from "lucide-react"
 import { BrandMark } from "../BrandMark"
+import { CharmCarousel } from "../CharmCarousel"
 import { GlassButton } from "../ui/glass-button"
 import { MajesticSignalScene } from "./MajesticSignalScene"
 
@@ -40,9 +41,12 @@ export function EmptySpaceHero({ topBarVisible, onJoin }: EmptySpaceHeroProps) {
           <MajesticSignalScene />
         </div>
 
-        <p className="empty-space-secondary">
-          Early members get a permanent Founding Builder badge, referral perks, and priority access.
-        </p>
+        <div className="empty-space-early-row">
+          <p className="empty-space-secondary">
+            Early members get limited-time charms, referral perks, and priority access.
+          </p>
+          <CharmCarousel variant="hero" />
+        </div>
 
         <div className="empty-space-content">
           <a className="empty-space-brand" href="#top" aria-label="PairUp home">
@@ -73,4 +77,3 @@ export function EmptySpaceHero({ topBarVisible, onJoin }: EmptySpaceHeroProps) {
     </>
   )
 }
-

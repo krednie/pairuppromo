@@ -14,8 +14,14 @@ import {
   useTransform,
   type PanInfo,
 } from "motion/react"
-import { Check, MoveRight, X } from "lucide-react"
+import { Check, Copy, MoveRight, X } from "lucide-react"
+import type { BadgeId } from "../../shared/badges"
+import { getBadge } from "../config/badges"
 import { BrandMark } from "./BrandMark"
+import { CharmCarousel } from "./CharmCarousel"
+
+type SignupPhase = "idle" | "referral" | "saving" | "leaving" | "joined"
+type ErrorField = "name" | "phone" | "badge" | "referral" | ""
 
 function ProfileArtwork() {
   return (
@@ -55,17 +61,25 @@ function stopCardDrag(event: ReactPointerEvent<HTMLElement>) {
 export function SwipeJoinSection() {
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
+  const [website, setWebsite] = useState("")
+  const [enteredReferralCode, setEnteredReferralCode] = useState("")
+  const [shareReferralCode, setShareReferralCode] = useState("")
+  const [referralCopied, setReferralCopied] = useState(false)
+  const [selectedBadge, setSelectedBadge] = useState<BadgeId | null>(null)
   const [error, setError] = useState("")
-  const [errorField, setErrorField] = useState<"name" | "phone" | "">("")
-  const [phase, setPhase] = useState<"idle" | "saving" | "leaving" | "joined">("idle")
+  const [errorField, setErrorField] = useState<ErrorField>("")
+  const [phase, setPhase] = useState<SignupPhase>("idle")
   const [dragging, setDragging] = useState(false)
   const [nameEditorReady, setNameEditorReady] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLInputElement>(null)
   const phoneRef = useRef<HTMLInputElement>(null)
+  const referralRef = useRef<HTMLInputElement>(null)
+  const savingRef = useRef(false)
   const reducedMotion = useReducedMotion()
   const x = useMotionValue(0)
   const rotate = useTransform(x, [0, 260], [0, 4.8])
+  const selectedBadgeDetails = getBadge(selectedBadge)
 
   useEffect(() => {
     const section = sectionRef.current
@@ -89,18 +103,14 @@ export function SwipeJoinSection() {
     animate(x, 0, { type: "spring", stiffness: 420, damping: 34 })
   }
 
-  const clearProfile = () => {
-    setName("")
-    setPhone("")
-    setError("")
-    setErrorField("")
-    resetCard()
-    window.setTimeout(() => nameRef.current?.focus(), 100)
+  const clearError = () => {
+    if (error) {
+      setError("")
+      setErrorField("")
+    }
   }
 
-  const join = async () => {
-    if (phase !== "idle") return
-
+  const validateProfile = () => {
     const cleanName = name.trim()
     const cleanPhone = phone.trim()
     const digits = cleanPhone.replace(/\D/g, "")
@@ -110,20 +120,93 @@ export function SwipeJoinSection() {
       setErrorField("name")
       resetCard()
       window.setTimeout(() => nameRef.current?.focus(), 120)
-      return
+      return null
     }
 
-    if (digits.length < 8 || digits.length > 15) {
+    if (digits.length < 8 || digits.length > 15 || !/^[+()\-\s0-9]+$/.test(cleanPhone)) {
       setError("Enter a valid phone number.")
       setErrorField("phone")
       resetCard()
       window.setTimeout(() => phoneRef.current?.focus(), 120)
+      return null
+    }
+
+    return { cleanName, cleanPhone }
+  }
+
+  const clearProfile = () => {
+    setName("")
+    setPhone("")
+    setSelectedBadge(null)
+    setEnteredReferralCode("")
+    setShareReferralCode("")
+    setReferralCopied(false)
+    setError("")
+    setErrorField("")
+    resetCard()
+    window.setTimeout(() => nameRef.current?.focus(), 100)
+  }
+
+  const advanceToReferral = () => {
+    if (phase !== "idle") return
+    const profile = validateProfile()
+    if (!profile) return
+
+    if (!selectedBadge) {
+      setError("Choose one charm to continue.")
+      setErrorField("badge")
+      resetCard()
       return
     }
 
     setError("")
     setErrorField("")
+    resetCard()
+    setPhase("referral")
+    window.setTimeout(() => referralRef.current?.focus(), 180)
+  }
+
+  const returnToProfile = () => {
+    if (phase === "saving") return
+    setPhase("idle")
+    setError("")
+    setErrorField("")
+    resetCard()
+  }
+
+  const saveProfile = async () => {
+    if (phase !== "referral" || savingRef.current) return
+    const profile = validateProfile()
+    if (!profile) {
+      setPhase("idle")
+      return
+    }
+
+    if (!selectedBadge) {
+      setError("Choose one charm to continue.")
+      setErrorField("badge")
+      setPhase("idle")
+      resetCard()
+      return
+    }
+
+    const cleanReferralCode = enteredReferralCode.trim().toUpperCase()
+    if (cleanReferralCode && !/^[A-Z0-9]{6,16}$/.test(cleanReferralCode)) {
+      setError("Enter a valid referral code.")
+      setErrorField("referral")
+      resetCard()
+      window.setTimeout(() => referralRef.current?.focus(), 120)
+      return
+    }
+
+    setError("")
+    setErrorField("")
+    savingRef.current = true
     setPhase("saving")
+    resetCard()
+
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), 10000)
 
     try {
       const response = await fetch("/api/signup", {
@@ -132,22 +215,41 @@ export function SwipeJoinSection() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: cleanName, phone: cleanPhone }),
+        body: JSON.stringify({
+          name: profile.cleanName,
+          phone: profile.cleanPhone,
+          badge: selectedBadge,
+          referralCode: cleanReferralCode,
+          website,
+        }),
+        signal: controller.signal,
       })
+      const result = await response.json().catch(() => null) as { error?: string; referralCode?: string } | null
 
       if (!response.ok) {
-        throw new Error("Signup request failed")
+        throw new Error(result?.error || "Could not save your profile. Try again.")
       }
-    } catch {
-      setPhase("idle")
-      setError("Could not save your profile. Try again.")
+      if (!result?.referralCode) {
+        throw new Error("Could not create your referral code. Try again.")
+      }
+      setShareReferralCode(result.referralCode)
+    } catch (requestError) {
+      savingRef.current = false
+      setPhase("referral")
+      setError(
+        requestError instanceof DOMException && requestError.name === "AbortError"
+          ? "The request timed out. Try again."
+          : requestError instanceof Error
+            ? requestError.message
+            : "Could not save your profile. Try again.",
+      )
       setErrorField("")
       resetCard()
       return
+    } finally {
+      window.clearTimeout(timeout)
     }
 
-    window.localStorage.setItem("pairup-swipe-name", cleanName)
-    window.localStorage.setItem("pairup-swipe-phone", cleanPhone)
     setPhase("leaving")
 
     if (!reducedMotion) {
@@ -163,7 +265,12 @@ export function SwipeJoinSection() {
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    void join()
+    advanceToReferral()
+  }
+
+  const submitReferral = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    void saveProfile()
   }
 
   const finishDrag = (
@@ -172,25 +279,44 @@ export function SwipeJoinSection() {
   ) => {
     setDragging(false)
     if (info.offset.x > 118 || info.velocity.x > 650) {
-      void join()
+      if (phase === "idle") advanceToReferral()
+      if (phase === "referral") void saveProfile()
       return
     }
     resetCard()
   }
 
   const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (event.target === event.currentTarget && event.key === "ArrowRight") {
-      event.preventDefault()
-      void join()
-    }
+    if (event.target !== event.currentTarget || event.key !== "ArrowRight") return
+    event.preventDefault()
+    if (phase === "idle") advanceToReferral()
+    if (phase === "referral") void saveProfile()
   }
 
-  const clearError = () => {
-    if (error) {
-      setError("")
-      setErrorField("")
-    }
-  }
+  const cardActions = phase !== "joined" && phase !== "leaving" ? (
+    <div className="swipe-card-actions" aria-label="Profile actions">
+      <button
+        className="swipe-card-action swipe-card-reject"
+        type="button"
+        onClick={phase === "referral" ? returnToProfile : clearProfile}
+        disabled={phase === "saving"}
+        aria-label={phase === "referral" ? "Back to profile" : "Clear profile"}
+        title={phase === "referral" ? "Back to profile" : "Clear profile"}
+      >
+        <X />
+      </button>
+      <button
+        className="swipe-card-action swipe-card-accept"
+        type="button"
+        onClick={phase === "referral" ? () => void saveProfile() : advanceToReferral}
+        disabled={phase === "saving"}
+        aria-label={phase === "referral" ? "Complete signup" : "Continue to referral code"}
+        title={phase === "referral" ? "Complete signup" : "Continue to referral code"}
+      >
+        <Check />
+      </button>
+    </div>
+  ) : null
 
   return (
     <section
@@ -224,128 +350,220 @@ export function SwipeJoinSection() {
                 transition={{ type: "spring", stiffness: 280, damping: 26 }}
                 aria-live="polite"
               >
-                <span className="swipe-success-icon"><Check /></span>
+                {selectedBadgeDetails ? (
+                  <span className="swipe-success-charm">
+                    <img src={selectedBadgeDetails.image} alt="" />
+                  </span>
+                ) : (
+                  <span className="swipe-success-icon"><Check /></span>
+                )}
                 <p>SIGNAL RECEIVED</p>
                 <h3>You&apos;re officially a Founding Builder.</h3>
-                <span>{name} - {phone}</span>
+                <span>{name} claimed {selectedBadgeDetails?.name ?? "a founding charm"}.</span>
+                {shareReferralCode ? (
+                  <div className="swipe-referral-share">
+                    <span>Your referral code</span>
+                    <strong>{shareReferralCode}</strong>
+                    <button
+                      type="button"
+                      aria-label="Copy referral code"
+                      title="Copy referral code"
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard.writeText(shareReferralCode)
+                          setReferralCopied(true)
+                          window.setTimeout(() => setReferralCopied(false), 1800)
+                        } catch {
+                          setError("Select the code and copy it manually.")
+                        }
+                      }}
+                    >
+                      {referralCopied ? <Check /> : <Copy />}
+                    </button>
+                  </div>
+                ) : null}
                 <BrandMark className="swipe-success-mark" />
               </motion.article>
             ) : (
-              <>
-                <motion.article
-                  className={
-                    "swipe-profile-card" +
-                    (dragging ? " is-dragging" : "") +
-                    (error ? " has-error" : "")
-                  }
-                  style={{ x, rotate }}
-                  drag={phase === "idle" ? "x" : false}
-                  dragConstraints={{ left: 0, right: 280 }}
-                  dragElastic={{ left: 0.02, right: 0.16 }}
-                  dragMomentum={false}
-                  onDragStart={() => setDragging(true)}
-                  onDragEnd={finishDrag}
-                  onKeyDown={handleCardKeyDown}
-                  tabIndex={0}
-                  aria-busy={phase === "saving"}
-                  aria-label="Founding Builder profile card"
-                >
-                  <header className="swipe-card-header">
-                    <span className="swipe-card-brand"><BrandMark /> PairUp</span>
-                    <span>EARLY ACCESS / 001</span>
-                  </header>
+              <motion.article
+                className={
+                  "swipe-profile-card" +
+                  (dragging ? " is-dragging" : "") +
+                  (error ? " has-error" : "")
+                }
+                style={{ x, rotate }}
+                drag={phase === "idle" || phase === "referral" ? "x" : false}
+                dragConstraints={{ left: 0, right: 280 }}
+                dragElastic={{ left: 0.02, right: 0.16 }}
+                dragMomentum={false}
+                onDragStart={() => setDragging(true)}
+                onDragEnd={finishDrag}
+                onKeyDown={handleCardKeyDown}
+                tabIndex={0}
+                aria-label="Founding Builder profile card"
+                aria-busy={phase === "saving" || phase === "leaving"}
+              >
+                <header className="swipe-card-header">
+                  <span className="swipe-card-brand"><BrandMark /> PairUp</span>
+                  <span>EARLY ACCESS / 001</span>
+                </header>
 
-                  <ProfileArtwork />
+                {selectedBadgeDetails ? (
+                  <motion.span
+                    key={selectedBadgeDetails.id}
+                    className="swipe-profile-charm-sticker"
+                    initial={{ opacity: 0, scale: 0.6, rotate: -12 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 360, damping: 22 }}
+                    aria-label={`Selected charm: ${selectedBadgeDetails.name}`}
+                  >
+                    <img src={selectedBadgeDetails.image} alt="" />
+                  </motion.span>
+                ) : null}
 
-                  <div className="swipe-card-body">
-                    <form className="swipe-profile-form" onSubmit={submit} noValidate>
-                      <div className="swipe-card-title-row">
-                        <div className="swipe-card-identity">
-                          <span>FOUNDING BUILDER</span>
-                          <div className="swipe-name-editor" onPointerDown={stopCardDrag}>
-                            <span className="swipe-name-erasing" aria-hidden="true">
-                              <strong>Your profile</strong>
-                              <i className="swipe-edit-cursor" />
-                            </span>
-                            <label className="swipe-name-input" htmlFor="swipe-name">
-                              <span>Name</span>
-                              <input
-                                ref={nameRef}
-                                id="swipe-name"
-                                type="text"
-                                autoComplete="name"
-                                value={name}
-                                onChange={(event) => {
-                                  setName(event.target.value)
-                                  clearError()
-                                }}
-                                placeholder="Your name"
-                                tabIndex={nameEditorReady ? 0 : -1}
-                                aria-invalid={errorField === "name"}
-                                aria-describedby={error ? "swipe-profile-error" : undefined}
-                              />
-                            </label>
-                          </div>
-                        </div>
+                <ProfileArtwork />
+
+                <div className="swipe-card-body">
+                  {phase === "referral" || phase === "saving" ? (
+                    <motion.form
+                      className="swipe-referral-form"
+                      onSubmit={submitReferral}
+                      noValidate
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.24 }}
+                    >
+                      <div className="swipe-referral-heading">
+                        <span>FINAL STEP</span>
+                        <strong>Referral code</strong>
                       </div>
-
-                      <div className="swipe-phone-field">
-                        <label htmlFor="swipe-phone">Phone number</label>
-                        <div className="swipe-phone-row" onPointerDown={stopCardDrag}>
-                          <input
-                            ref={phoneRef}
-                            id="swipe-phone"
-                            type="tel"
-                            inputMode="tel"
-                            autoComplete="tel"
-                            value={phone}
-                            onChange={(event) => {
-                              setPhone(event.target.value)
-                              clearError()
-                            }}
-                            placeholder="Phone number"
-                            aria-invalid={errorField === "phone"}
-                            aria-describedby={error ? "swipe-profile-error" : undefined}
-                          />
-                        </div>
+                      <label htmlFor="swipe-referral">Referral code (optional)</label>
+                      <div className="swipe-referral-row" onPointerDown={stopCardDrag}>
+                        <input
+                          ref={referralRef}
+                          id="swipe-referral"
+                          type="text"
+                          inputMode="text"
+                          autoComplete="off"
+                          autoCapitalize="characters"
+                          maxLength={16}
+                          value={enteredReferralCode}
+                          disabled={phase === "saving"}
+                          onChange={(event) => {
+                            setEnteredReferralCode(event.target.value.toUpperCase().replace(/\s/g, ""))
+                            clearError()
+                          }}
+                          placeholder="Referral code"
+                          aria-invalid={errorField === "referral"}
+                          aria-describedby={error ? "swipe-profile-error" : undefined}
+                        />
                       </div>
-
                       <div className="swipe-card-feedback">
-                        {error ? (
-                          <p id="swipe-profile-error" role="alert">{error}</p>
-                        ) : (
-                          <span aria-hidden="true"><i /><i /><i /></span>
-                        )}
+                        {error ? <p id="swipe-profile-error" role="alert">{error}</p> : <span aria-hidden="true"><i /><i /><i /></span>}
                         <MoveRight aria-hidden="true" />
                       </div>
-                    </form>
-                  </div>
-                </motion.article>
+                    </motion.form>
+                  ) : (
+                  <form className="swipe-profile-form" onSubmit={submit} noValidate>
+                    <div className="swipe-card-title-row">
+                      <div className="swipe-card-identity">
+                        <span>FOUNDING BUILDER</span>
+                        <div className="swipe-name-editor" onPointerDown={stopCardDrag}>
+                          <span className="swipe-name-erasing" aria-hidden="true">
+                            <strong>Your profile</strong>
+                            <i className="swipe-edit-cursor" />
+                          </span>
+                          <label className="swipe-name-input" htmlFor="swipe-name">
+                            <span>Name</span>
+                            <input
+                              ref={nameRef}
+                              id="swipe-name"
+                              type="text"
+                              autoComplete="name"
+                              maxLength={80}
+                              value={name}
+                              onChange={(event) => {
+                                setName(event.target.value)
+                                clearError()
+                              }}
+                              placeholder="Your name"
+                              tabIndex={nameEditorReady ? 0 : -1}
+                              aria-invalid={errorField === "name"}
+                              aria-describedby={error ? "swipe-profile-error" : undefined}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
 
-                <div className="swipe-card-actions" aria-label="Profile actions">
-                  <button
-                    className="swipe-card-action swipe-card-reject"
-                    type="button"
-                    onClick={clearProfile}
-                    disabled={phase === "saving"}
-                    aria-label="Clear profile"
-                    title="Clear profile"
-                  >
-                    <X />
-                  </button>
-                  <button
-                    className="swipe-card-action swipe-card-accept"
-                    type="button"
-                    onClick={() => void join()}
-                    disabled={phase === "saving"}
-                    aria-label="Join PairUp"
-                    title="Join PairUp"
-                  >
-                    <Check />
-                  </button>
+                    <div className="swipe-phone-field">
+                      <label htmlFor="swipe-phone">Phone number</label>
+                      <div className="swipe-phone-row" onPointerDown={stopCardDrag}>
+                        <input
+                          ref={phoneRef}
+                          id="swipe-phone"
+                          type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
+                          maxLength={32}
+                          value={phone}
+                          onChange={(event) => {
+                            setPhone(event.target.value)
+                            clearError()
+                          }}
+                          placeholder="Phone number"
+                          aria-invalid={errorField === "phone"}
+                          aria-describedby={error ? "swipe-profile-error" : undefined}
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      className={"swipe-profile-charms" + (errorField === "badge" ? " has-error" : "")}
+                      onPointerDown={stopCardDrag}
+                    >
+                      <CharmCarousel
+                        variant="picker"
+                        selectedId={selectedBadge}
+                        disabled={phase !== "idle"}
+                        onSelect={(badgeId) => {
+                          setSelectedBadge(badgeId)
+                          clearError()
+                        }}
+                      />
+                    </div>
+
+                    <label className="swipe-form-trap" aria-hidden="true">
+                      Website
+                      <input
+                        type="text"
+                        name="website"
+                        autoComplete="off"
+                        tabIndex={-1}
+                        value={website}
+                        onChange={(event) => setWebsite(event.target.value)}
+                      />
+                    </label>
+
+                    <div className="swipe-card-feedback">
+                      {error ? (
+                        <p id="swipe-profile-error" role="alert">{error}</p>
+                      ) : (
+                        <span aria-hidden="true"><i /><i /><i /></span>
+                      )}
+                      <MoveRight aria-hidden="true" />
+                    </div>
+                    <p className="swipe-consent">
+                      By joining, you agree to our <a href="/terms">Terms</a> and acknowledge our{" "}
+                      <a href="/privacy">Privacy notice</a>.
+                    </p>
+                  </form>
+                  )}
                 </div>
-              </>
+              </motion.article>
             )}
+
+            {cardActions}
           </div>
         </div>
       </div>
