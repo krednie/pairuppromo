@@ -2,6 +2,17 @@
   height: 720px;
 }
 
+@media (min-width: 801px) {
+  .swipe-join-section {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .swipe-join-sticky {
+    position: relative;
+  }
+}
+
 .swipe-join-card-shell {
   display: flex;
   flex-direction: column;
@@ -239,4 +250,3 @@
     animation: none;
   }
 }
-

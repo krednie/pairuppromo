@@ -212,7 +212,7 @@
 
 .collision-card {
   --final-scale: 0.52;
-  --build-scale: 0.44;
+  --build-scale: 0.572;
   position: absolute;
   z-index: 9;
   top: 50%;
@@ -238,29 +238,29 @@
 .collision-slot-one {
   --target-x: -325px;
   --target-y: -205px;
-  --build-x: -123px;
-  --build-y: -156px;
+  --build-x: -146.3px;
+  --build-y: -189.2px;
 }
 
 .collision-slot-two {
   --target-x: 325px;
   --target-y: -205px;
-  --build-x: 123px;
-  --build-y: -156px;
+  --build-x: 146.3px;
+  --build-y: -189.2px;
 }
 
 .collision-slot-three {
   --target-x: -325px;
   --target-y: 205px;
-  --build-x: -123px;
-  --build-y: 156px;
+  --build-x: -146.3px;
+  --build-y: 189.2px;
 }
 
 .collision-slot-four {
   --target-x: 325px;
   --target-y: 205px;
-  --build-x: 123px;
-  --build-y: 156px;
+  --build-x: 146.3px;
+  --build-y: 189.2px;
 }
 
 .is-searching .collision-card.is-accepted {
@@ -664,27 +664,27 @@
   }
 
   .collision-card {
-    --build-scale: 0.37;
+    --build-scale: 0.481;
   }
 
   .collision-slot-one {
-    --build-x: -104px;
-    --build-y: -131.5px;
+    --build-x: -123.4px;
+    --build-y: -159.5px;
   }
 
   .collision-slot-two {
-    --build-x: 104px;
-    --build-y: -131.5px;
+    --build-x: 123.4px;
+    --build-y: -159.5px;
   }
 
   .collision-slot-three {
-    --build-x: -104px;
-    --build-y: 131.5px;
+    --build-x: -123.4px;
+    --build-y: 159.5px;
   }
 
   .collision-slot-four {
-    --build-x: 104px;
-    --build-y: 131.5px;
+    --build-x: 123.4px;
+    --build-y: 159.5px;
   }
 
   .is-matched .collision-card.is-accepted {
@@ -890,33 +890,65 @@
   }
 
   .collision-card {
-    --build-scale: 0.38;
+    --build-scale: 0.494;
     width: min(310px, 80vw);
     min-height: 470px;
   }
 
   .collision-slot-one {
-    --build-x: calc(-39.2px - min(58.9px, 15.2vw));
-    --build-y: -128.5px;
+    --build-x: calc(-39.2px - min(76.57px, 19.76vw));
+    --build-y: -155.3px;
   }
 
   .collision-slot-two {
-    --build-x: calc(39.2px + min(58.9px, 15.2vw));
-    --build-y: -128.5px;
+    --build-x: calc(39.2px + min(76.57px, 19.76vw));
+    --build-y: -155.3px;
   }
 
   .collision-slot-three {
-    --build-x: calc(-39.2px - min(58.9px, 15.2vw));
-    --build-y: 128.5px;
+    --build-x: calc(-39.2px - min(76.57px, 19.76vw));
+    --build-y: 155.3px;
   }
 
   .collision-slot-four {
-    --build-x: calc(39.2px + min(58.9px, 15.2vw));
-    --build-y: 128.5px;
+    --build-x: calc(39.2px + min(76.57px, 19.76vw));
+    --build-y: 155.3px;
   }
 
   .collision-profile-photo {
     height: 190px;
+  }
+}
+
+@media (max-width: 340px) {
+  .collision-core {
+    width: 96px;
+    height: 96px;
+  }
+
+  .collision-mark {
+    width: 35px;
+    height: 35px;
+  }
+
+  .collision-slot-one {
+    --build-x: calc(-33.6px - 19.76vw);
+    --build-y: -149.7px;
+  }
+
+  .collision-slot-two {
+    --build-x: calc(33.6px + 19.76vw);
+    --build-y: -149.7px;
+  }
+
+  .collision-slot-three {
+    --build-x: calc(-33.6px - 19.76vw);
+    --build-y: 149.7px;
+  }
+
+  .collision-slot-four {
+    --build-x: calc(33.6px + 19.76vw);
+    --build-y: 149.7px;
   }
 }
 
