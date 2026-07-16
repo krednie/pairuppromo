@@ -674,6 +674,7 @@ By the signup, the visitor should feel:
 
 - [x] Enlarge and tighten the final four-profile orbit on desktop and mobile, with about 15% overlap against the PairUp core.
 - [x] Expand pre-launch proof into three honest signals, including a hand-drawn coral underline for "ziddis."
+- [x] Replace the formation placeholder with the approved PairUp story, motivation, closing, and referral copy.
 
 ## Visual
 
