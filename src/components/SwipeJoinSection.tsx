@@ -224,12 +224,16 @@ export function SwipeJoinSection() {
         }),
         signal: controller.signal,
       })
-      const result = await response.json().catch(() => null) as { error?: string; referralCode?: string } | null
+      const result = await response.json().catch(() => null) as {
+        error?: unknown
+        referralCode?: unknown
+      } | null
+      const responseError = typeof result?.error === "string" ? result.error : ""
 
       if (!response.ok) {
-        throw new Error(result?.error || "Could not save your profile. Try again.")
+        throw new Error(responseError || "Could not save your profile. Try again.")
       }
-      if (!result?.referralCode) {
+      if (typeof result?.referralCode !== "string" || !result.referralCode) {
         throw new Error("Could not create your referral code. Try again.")
       }
       setShareReferralCode(result.referralCode)

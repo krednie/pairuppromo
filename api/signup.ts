@@ -1,5 +1,17 @@
 import { neon } from "@neondatabase/serverless"
-import { isBadgeId } from "../shared/badges"
+
+const badgeIds = new Set([
+  "diet-coke",
+  "scrunchie",
+  "lip-gloss",
+  "jordan-wolf-grey",
+  "porsche-911-gt3-rs",
+  "koenigsegg-jesko",
+  "claw-clip",
+  "teddy",
+  "burger",
+  "eiffel-tower",
+])
 
 type SignupPayload = {
   name?: unknown
@@ -45,6 +57,10 @@ function normalizePhone(phone: string) {
 
 function cleanReferralCode(value: unknown) {
   return typeof value === "string" ? value.trim().toUpperCase() : ""
+}
+
+function isBadgeId(value: unknown) {
+  return typeof value === "string" && badgeIds.has(value)
 }
 
 function createReferralCode() {
